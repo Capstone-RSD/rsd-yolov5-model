@@ -1,0 +1,4 @@
+requests
+certifi
+confluent-kafka[json,protobuf]>=1.4.2
+protobuf
