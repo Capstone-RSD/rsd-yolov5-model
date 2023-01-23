@@ -1,7 +1,7 @@
 
 
 import argparse
-from dotenv import load_dotenv
+from dotenv import load_dotenv,find_dotenv
 import os
 from confluent_kafka import Consumer
 import rss_payload_pb2 as RSSPayload
@@ -11,12 +11,10 @@ from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka.schema_registry.protobuf import ProtobufDeserializer
 
 from confluent_kafka.schema_registry import SchemaRegistryClient
-# payload = RSSPayload.tyRSSPayload()
-# payload.damage_type=
 
 
-def configure():
-    load_dotenv()
+# def configure():
+load_dotenv(find_dotenv())
 
 def main(args):
 
@@ -24,28 +22,23 @@ def main(args):
 
     schema_registry_conf = {'url': args.schema_registry,
                             "basic.auth.credentials.source":"USER_INFO",
-                            "basic.auth.user.info":{os.getenv('SR_API_KEY')}+":"+{os.getenv('SR_API_SECRET')},
-                            #"72N3WVXRKSP3AFSA:eGwV/PP0LGup9JOf1cLZr1mFsoUE9A5a/N4PNJ1hs2A92jw3r4ACGl03VUkMv0fU",
+                            "basic.auth.user.info":os.getenv('SR_API_KEY')+":"+os.getenv('SR_API_SECRET'),
                             'use.deprecated.format': False
                             }
 
     # schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
-    protobuf_deserializer = ProtobufDeserializer(RSSClient.Client,
-                                                 schema_registry_conf)
+    # protobuf_deserializer = ProtobufDeserializer(RSSClient.Client,
+    #                                              schema_registry_conf)
 
     consumer_conf = {'bootstrap.servers': args.bootstrap_servers,
                      'group.id': args.group,
                      'auto.offset.reset': "earliest",
                      "security.protocol":"SASL_SSL",
                      "sasl.mechanisms":"PLAIN",
-                     "sasl.username":{os.getenv("CLUSTER_API_KEY")},
-                     "sasl.password":{os.getenv("CLUSTER_API_SECRET")},
-                    #  "consumer_timeout_ms":1000,
+                     "sasl.username":os.getenv("CLUSTER_API_KEY"),
+                     "sasl.password":os.getenv("CLUSTER_API_SECRET"),
                      "session.timeout.ms":45000}
-
-
-
 
 
     consumer = Consumer(consumer_conf)

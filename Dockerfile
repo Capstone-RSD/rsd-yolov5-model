@@ -1,6 +1,8 @@
 # FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
 FROM pytorch/pytorch:latest
-# FROM python:latest
+# FROM python:3-alpine3.9
+# FROM  bitnami/python:latest
+
 
 WORKDIR /workspace
 COPY . /workspace
