@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  rsd-yolov5-model:
+    container_name: rsd-yolov5-model
+    build: .
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # device_ids: ['0', '3'] # Will use GPUS 0 & 3
+              # count: 1 # Leave commented to use all available GPUs
+              capabilities: [gpu]
+    # ports:
+    #   - "8000:5000"
+    # volumes:
+    #   - .:/code
+  #   #   - logvolume01:/var/log
