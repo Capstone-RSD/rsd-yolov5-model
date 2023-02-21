@@ -13,3 +13,5 @@ RUN pip install -U ipykernel
 RUN pip install -r requirements.txt && \
     pip install google-api-python-client python-dotenv
     # apt-get update && apt install git -y && \
+
+CMD [ "python", "rss_consumer.py" ]
