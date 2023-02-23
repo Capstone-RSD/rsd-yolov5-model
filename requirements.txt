@@ -2,4 +2,9 @@ requests
 certifi
 confluent-kafka[json,protobuf]>=1.4.2
 protobuf
-firebase
+# firebase
+# firebase-admin
+# torch
+opencv-python
+yolov5
+python-dotenv
