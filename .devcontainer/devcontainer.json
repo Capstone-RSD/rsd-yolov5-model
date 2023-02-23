@@ -19,13 +19,21 @@
 	// "service": "rsd-yolov5-model",
 
 	"features": {
-		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/devcontainers/features/git-lfs:1": {},
-		"ghcr.io/devcontainers/features/github-cli:1": {},
-		"ghcr.io/devcontainers/features/nvidia-cuda:1": {
-			"version": "latest",
-		},
-		// "ghcr.io/devcontainers-contrib/features/firebase-cli:2": {}
+		// "ghcr.io/devcontainers/features/git:1": {
+		// 	"ppa": true,
+		// 	"version": "os-provided"
+		// },
+		// "ghcr.io/devcontainers/features/git-lfs:1": {
+		// 	"version": "latest"
+		// },
+		// "ghcr.io/devcontainers/features/nvidia-cuda:1": {
+		// 	"installCudnn": true,
+		// 	"cudaVersion": "11.8",
+		// 	"cudnnVersion": "8.6.0.163"
+		// }
+		// "ghcr.io/devcontainers-contrib/features/firebase-cli:2": {
+		// 	"version": "latest"
+		// }
 	},
 
 	"runArgs": ["--gpus=all", "--shm-size=6gb","--ipc=host"],
