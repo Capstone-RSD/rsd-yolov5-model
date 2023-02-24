@@ -83,7 +83,7 @@ def main(args):
             if msg is None:
                 continue
             # rssClient = protobuf_deserializer(msg.value(), SerializationContext(topic, MessageField.VALUE))
-
+            print(msg.value())
             rssClient = RSSClient.Client();
             client = google.protobuf.json_format.Parse(msg.value(),rssClient,ignore_unknown_fields=True)
             if client is not None:
@@ -102,6 +102,7 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
                     pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres)
+                
 
         except KeyboardInterrupt:
             break

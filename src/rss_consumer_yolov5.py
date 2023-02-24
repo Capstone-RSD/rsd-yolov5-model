@@ -7,16 +7,10 @@ import numpy as np
 from yolov5.utils.augmentations import letterbox
 
 def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou_thres):
-    # image = np.asarray(bytearray(imagePath), dtype="uint8")
-    # image = np.load(imagePath)
-    image = np.fromstring(imagePath, dtype=np.uint8)
+    
+    nparr = np.fromstring(imagePath, np.uint8)
 
-    # use imdecode function
-    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-
-    img0 = cv2.imread(image)
-
-    cv2.imwrite("result.jpg", image)
+    img0 = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     # Padded resize
     img = letterbox(img0, imgsz, stride, auto=pt)[0]
