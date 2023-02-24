@@ -17,4 +17,7 @@ jobs:
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
       - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v2
+        uses: actions/dependency-review-action@v3
+        with:
+          fail-on-severity: 'moderate'
+          allow-licenses: GPL-3.0, BSD-3-Clause, MIT
