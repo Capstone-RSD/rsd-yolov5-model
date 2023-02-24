@@ -1,18 +1,16 @@
 import torch
-import torch.backends.cudnn as cudnn
 
-from yolov5.models.common import DetectMultiBackend
-from yolov5.utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages, LoadStreams
-from yolov5.utils.general import (LOGGER, check_file, check_img_size, check_imshow, check_requirements, colorstr, cv2,
-             increment_path, non_max_suppression, print_args, scale_boxes, strip_optimizer, xyxy2xywh)
-from yolov5.utils.plots import Annotator, colors, save_one_box
-from yolov5.utils.torch_utils import select_device, time_sync
+from yolov5.utils.general import (cv2,non_max_suppression, scale_boxes)
+from yolov5.utils.torch_utils import time_sync
 
 import numpy as np
 from yolov5.utils.augmentations import letterbox
 
 def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou_thres):
-    img0 = cv2.imread(imagePath)
+    
+    nparr = np.fromstring(imagePath, np.uint8)
+
+    img0 = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     # Padded resize
     img = letterbox(img0, imgsz, stride, auto=pt)[0]
