@@ -8,3 +8,4 @@ protobuf
 opencv-python
 yolov5
 python-dotenv
+google-api-python-client

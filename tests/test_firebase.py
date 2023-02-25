@@ -1,6 +1,6 @@
 import unittest
 
-from rss_consumer_firebase import download_blob
+from src.rss_consumer_firebase import download_blob
 
 # https://youtu.be/-PHBRzL80Lk
 class TestFirebase(unittest.TestCase):
