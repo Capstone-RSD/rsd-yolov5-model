@@ -43,4 +43,6 @@ jobs:
           pip install pylint unittest2
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with unittest
-        run: python -m unittest discover -s tests -p '*test_*.py'
+        run: |
+          python -m unittest discover -s tests -p '*test_*.py'
+          python -m unittest tests/test_client.py --cluster_key ${{ secrets.CLUSTER_API_KEY }} --cluster_secret ${{ secrets.CLUSTER_API_SECRET }}
