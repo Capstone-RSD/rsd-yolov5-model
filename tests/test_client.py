@@ -27,3 +27,18 @@ class TestClientInitialization(unittest.TestCase):
     @patch('builtins.input', side_effect=["image"])
     @patch('rss_consumer.download_blob', return_value="test_image")
     @patch('rss_consumer.model_inference')
+    def test_client_initialization(self, args, mock_stdout, mock_input, mock_download_blob, mock_model_inference):
+        main(self.parser.parse_args([]))
+
+        # Check if the expected variables are not None
+        self.assertIsNotNone(args.bootstrap_servers)
+        self.assertIsNotNone(args.schema_registry)
+        self.assertIsNotNone(args.topic)
+        self.assertIsNotNone(args.group)
+
+        # Check if the expected messages are printed to the console
+        expected_output = "Client: "
+        self.assertIn(expected_output, mock_stdout.getvalue())
+
+if __name__ == '__main__':
+    unittest.main()
