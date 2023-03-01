@@ -54,8 +54,8 @@ def main(args):
                      'auto.offset.reset': "earliest",
                      "security.protocol":"SASL_SSL",
                      "sasl.mechanisms":"PLAIN",
-                     "sasl.username":os.getenv("CLUSTER_API_KEY"),
-                     "sasl.password":os.getenv("CLUSTER_API_SECRET"),
+                     "sasl.username":args.cluster_key,
+                     "sasl.password":args.cluster_secret,
                     #  "consumer_timeout_ms":1000,
                      "session.timeout.ms":45000}
 
@@ -102,7 +102,7 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
                     pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres)
-                
+
 
         except KeyboardInterrupt:
             break
@@ -120,5 +120,9 @@ if __name__ == '__main__':
                         help="Topic name")
     parser.add_argument('-g', dest="group", default="example_serde_protobuf",
                         help="Consumer group")
+    parser.add_argument('--cluster_key', dest="cluster_key", default=os.getenv("CLUSTER_API_KEY"),required=True,
+                        help="Cluster API Key")
+    parser.add_argument('--cluster_secret', dest="cluster_secret", default=os.getenv("CLUSTER_API_SECRET"),required=True,
+                        help="Cluster API Secret")
 
     main(parser.parse_args())
