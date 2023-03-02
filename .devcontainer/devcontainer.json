@@ -9,15 +9,6 @@
 		"dockerfile": "../Dockerfile"
 	},
 
-	// "dockerComposeFile": [
-	// 	"../docker-compose.yml",
-	// 	"docker-compose.yml"
-	// ],
-
-	// "workspaceFolder": "/workspace",
-
-	// "service": "rsd-yolov5-model",
-
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {
 			"ppa": true,
@@ -53,7 +44,7 @@
 			"extensions": [
 				"ms-python.python",
 				"ms-toolsai.jupyter"
-			]
+			],"settings": {}
 		}
 	},
 
