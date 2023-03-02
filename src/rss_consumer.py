@@ -16,6 +16,8 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
 
+from rss_consumer_neo4j import JsonToNeo4j
+
 import sys
 from pathlib import Path
 
@@ -120,9 +122,9 @@ if __name__ == '__main__':
                         help="Topic name")
     parser.add_argument('-g', dest="group", default="example_serde_protobuf",
                         help="Consumer group")
-    parser.add_argument('--cluster_key', dest="cluster_key", default=os.getenv("CLUSTER_API_KEY"),required=True,
+    parser.add_argument('--cluster_key', dest="cluster_key", default=os.getenv("CLUSTER_API_KEY"),
                         help="Cluster API Key")
-    parser.add_argument('--cluster_secret', dest="cluster_secret", default=os.getenv("CLUSTER_API_SECRET"),required=True,
+    parser.add_argument('--cluster_secret', dest="cluster_secret", default=os.getenv("CLUSTER_API_SECRET"),
                         help="Cluster API Secret")
 
     main(parser.parse_args())
