@@ -16,6 +16,10 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
     steps:
+      - name: Run tests
+        env: 
+          PYTHONPATH: $PYTHONPATH:./src
+        run: python -m unittest discover -s tests -p '*test_*.py'
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
