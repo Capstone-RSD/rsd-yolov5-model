@@ -1,3 +1,4 @@
+import google.protobuf.json_format
 import unittest
 import argparse
 from unittest.mock import patch
