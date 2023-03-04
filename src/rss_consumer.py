@@ -82,6 +82,7 @@ def main(args):
         try:
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
+            #consumer.get_watermark_offsets()
             if msg is None:
                 continue
             # rssClient = protobuf_deserializer(msg.value(), SerializationContext(topic, MessageField.VALUE))

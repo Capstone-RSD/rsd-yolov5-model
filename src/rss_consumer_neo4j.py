@@ -76,7 +76,7 @@ json_data = {
 map = folium.Map(location=[43.9569614, -78.9014442], zoom_start=13)
 marker = folium.Marker(location=[json_data["latitude"], json_data["longitude"]])
 marker.add_to(map)
-map.save("map.html")
+map.save("neo_map.html")
 
 #res_json = json.dumps(json_data)
 
