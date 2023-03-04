@@ -9,15 +9,6 @@
 		"dockerfile": "../Dockerfile"
 	},
 
-	// "dockerComposeFile": [
-	// 	"../docker-compose.yml",
-	// 	"docker-compose.yml"
-	// ],
-
-	// "workspaceFolder": "/workspace",
-
-	// "service": "rsd-yolov5-model",
-
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {
 			"ppa": true,
@@ -30,6 +21,9 @@
 			"installCudnn": true,
 			"cudaVersion": "11.8",
 			"cudnnVersion": "8.6.0.163"
+		},
+		"ghcr.io/devcontainers-contrib/features/firebase-cli:2": {
+			"version": "latest"
 		}
 	},
 
@@ -50,7 +44,7 @@
 			"extensions": [
 				"ms-python.python",
 				"ms-toolsai.jupyter"
-			]
+			],"settings": {}
 		}
 	},
 

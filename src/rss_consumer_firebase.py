@@ -1,4 +1,5 @@
 import requests
+from firebase_admin import credentials, initialize_app, storage
 
 def download_blob(download_url):
     """
@@ -10,4 +11,25 @@ def download_blob(download_url):
         return False
     else:
         return res.content
-#download_blob("https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FLVCRRtv1pgeCDusQC6lC9SrSSlp2%2Fuploads%2F1677022217697261.jpg?alt=media&token=9eb91437-0cca-4108-a486-71283f85bb31")
+
+
+
+def upload_map_to_firebase():
+    """
+    Uploads the generated HTML markup to a firebase bucket
+    """
+    # Init firebase with your credentials
+    cred = credentials.Certificate("rss-client-21d3b-firebase-private-key.json")
+    initialize_app(cred, {'storageBucket': 'rss-client-21d3b.appspot.com'})
+
+    # Put your local file path
+    # TODO: #14 replace file path to generated neo4j map cluster html markup
+    fileName = "<PLACE PATH TO FILE HERE>"
+    bucket = storage.bucket()
+    blob = bucket.blob("map-markup/"+fileName)
+    blob.upload_from_filename(fileName)
+
+    # Opt : if you want to make public access from the URL
+    blob.make_public()
+
+    return blob.public_url
