@@ -96,4 +96,4 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ProtobufDeserializer example")
-    parser.add_argument('-b', dest="bootstrap_servers", required
+    parser.add_argument('-b', dest="bootstrap_servers", required)
