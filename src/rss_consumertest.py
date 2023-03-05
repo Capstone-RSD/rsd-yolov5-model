@@ -1,7 +1,3 @@
-"""
-This module contains a Kafka consumer that performs object detection on images using YOLOv5 and saves the results to a database.
-"""
-
 import argparse
 import logging
 import os
