@@ -88,7 +88,7 @@ def main(args):
                     logging.error("Video blob type expected")
 
                 if img is not None:
-                    model_inference(imagePath=download_blob(image_blob.blob_url), 
+                    model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
                                      pt=pt, device=device, conf_thres=conf_thres,
                                     iou_thres=iou_thres)
