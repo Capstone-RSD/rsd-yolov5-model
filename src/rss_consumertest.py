@@ -18,7 +18,7 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.serialization import SerializationContext, MessageField
 
 from google.protobuf import json_format
-from generated.rss_client_pb2 import Client
+from generated.rss_schema_pb2 import Client
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
 
