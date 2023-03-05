@@ -63,7 +63,7 @@ def main(args):
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
-    stride, pt = model.stride, model.pt
+    stride, pt_value = model.stride, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     # Set up Kafka consumer
