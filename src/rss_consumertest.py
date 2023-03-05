@@ -1,23 +1,30 @@
+"""
+This module contains a Kafka consumer that performs object detection on images using YOLOv5 and saves the results to a database.
+"""
+
 import argparse
-import json
+import logging
 import os
 import sys
 from pathlib import Path
-import logging
+
 import torch
-import torch.backends.cudnn as cudnn
 from dotenv import load_dotenv, find_dotenv
+from torch.backends import cudnn
+
 from confluent_kafka import Consumer
 from confluent_kafka.schema_registry.protobuf import ProtobufDeserializer
-from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.serialization import SerializationContext, MessageField
+
+from google.protobuf import json_format
+from generated.rss_client_pb2 import Client
+from rss_consumer_firebase import download_blob
+from rss_consumer_yolov5 import model_inference
+
 from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
-import generated.rss_client_pb2 as RSSClient
-import google.protobuf.json_format
-from rss_consumer_firebase import download_blob
-from rss_consumer_yolov5 import model_inference
 
 # Set the logging level to INFO
 logging.basicConfig(level=logging.INFO)
@@ -71,11 +78,11 @@ def main(args):
                 continue
 
             # Deserialize incoming message
-            rss_client = RSSClient.Client()
-            client = google.protobuf.json_format.Parse(msg.value(), rss_client, ignore_unknown_fields=True)
+            rss_client = Client()
+            client = json_format.Parse(msg.value(), rss_client, ignore_unknown_fields=True)
             if client is not None:
-                logging.info(f"Incoming message: {client}")
-                logging.info(f"Incoming message blob_url: {client.blobs[0].blob_url}")
+                logging.info("Incoming message: %s", client)
+                logging.info("Incoming message blob_url: %s", client.blobs[0].blob_url)
 
                 # Download the blob prior to inferencing
                 image_blob = client.blobs[0]
@@ -95,5 +102,4 @@ def main(args):
     consumer.close()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="ProtobufDeserializer example")
-    parser.add_argument('-b', dest="bootstrap_servers", required=True)
+    parser = argparse.ArgumentParser
