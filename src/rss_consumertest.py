@@ -63,7 +63,7 @@ def main(args):
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
-    stride, pt_value = model.stride, model.pt
+    stride, pt = model.stride, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     # Set up Kafka consumer
@@ -94,7 +94,7 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
-                                     pt_value=pt_value, device=device, conf_thres=conf_thres,
+                                     pt=pt, device=device, conf_thres=conf_thres,
                                     iou_thres=iou_thres)
 
         except KeyboardInterrupt:
