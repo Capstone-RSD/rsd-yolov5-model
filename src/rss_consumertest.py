@@ -18,7 +18,7 @@ from confluent_kafka import Consumer
 # from confluent_kafka.serialization import SerializationContext, MessageField
 
 from google.protobuf import json_format
-# from generated.rss_client_pb2 import Client
+import generated.rss_client_pb2 as RSSClient
 from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
@@ -78,7 +78,7 @@ def main(args):
                 continue
 
             # Deserialize incoming message
-            rss_client = Client()
+            rssClient = RSSClient.Client()
             client = json_format.Parse(msg.value(), rss_client, ignore_unknown_fields=True)
             if client is not None:
                 logging.info("Incoming message: %s", client)
