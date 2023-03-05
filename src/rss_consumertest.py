@@ -4,24 +4,18 @@ This module contains tests for the rss_consumer module.
 
 import argparse
 import logging
-# import os
-# import sys
-# from pathlib import Path
 
 import torch
 from dotenv import load_dotenv, find_dotenv
-# from torch.backends import cudnn
 
 from confluent_kafka import Consumer
-# from confluent_kafka.schema_registry.protobuf import ProtobufDeserializer
-# from confluent_kafka.schema_registry import SchemaRegistryClient
-# from confluent_kafka.serialization import SerializationContext, MessageField
 
 from google.protobuf import json_format
-from generated.rss_client_pb2 import Client  # uncomment this line
+
 from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
+
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
 
@@ -92,9 +86,22 @@ def main(args):
                     logging.error("Video blob type expected")
 
                 if img is not None:
-                    try:
-                        model_inference(imagePath=download_blob(image_blob.blob_url),
-                                        model=model, imgsz=imgsz, stride=stride,
-                                        pt=pt, device=device)
-                    except Exception as e:
-                        logging.error("Error in model inference: %s", str(e))
+                    model_inference(imagePath=download_blob(image_blob.blob_url),
+                                    model=model, imgsz=imgsz, stride=stride,
+                                    pt=pt, device=device, conf_thres=conf_thres,
+                                    iou_thres=iou_thres)
+
+        except KeyboardInterrupt:
+            break
+
+    # Close Kafka consumer
+    consumer.close()
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--bootstrap-servers', type=str, default='localhost:9092',
+                        help='Bootstrap server URL')
+    parser.add_argument('--group', type=str, default='my-group',
+                        help='Consumer group ID')
+    parser.add_argument('--cluster-key', type=str, required=True,
+                        help='Cluster API key
