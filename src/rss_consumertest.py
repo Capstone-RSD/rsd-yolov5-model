@@ -16,7 +16,7 @@ from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
 
-from generated.rss_client_pb2 import Client
+import generated.rss_client_pb2 as Client
 
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
