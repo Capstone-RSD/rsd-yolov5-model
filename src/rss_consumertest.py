@@ -1,3 +1,7 @@
+"""
+This module contains tests for the rss_consumer module.
+"""
+
 import argparse
 import logging
 import os
