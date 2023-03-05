@@ -104,4 +104,4 @@ if __name__ == '__main__':
     parser.add_argument('--group', type=str, default='my-group',
                         help='Consumer group ID')
     parser.add_argument('--cluster-key', type=str, required=True,
-                        help='Cluster API key
+                        help='Cluster API key')
