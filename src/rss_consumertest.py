@@ -95,3 +95,8 @@ def main(args):
                     model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
                                      pt=pt, device=device)
+    except KeyboardInterrupt:
+        break
+
+    except Exception as e:
+        logging.error("Error processing message: %s", str(e))
