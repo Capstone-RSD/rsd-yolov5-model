@@ -18,7 +18,7 @@ from confluent_kafka import Consumer
 # from confluent_kafka.serialization import SerializationContext, MessageField
 
 from google.protobuf import json_format
-import generated.rss_client_pb2 as RSSClient
+# import generated.rss_client_pb2 as RSSClient
 from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
