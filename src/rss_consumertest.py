@@ -94,4 +94,4 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
-                                     pt=pt, device=device
+                                     pt=pt, device=device)
