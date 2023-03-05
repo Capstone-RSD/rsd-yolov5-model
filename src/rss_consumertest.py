@@ -94,7 +94,7 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
-                                     pt=pt, device=device, conf_thres=conf_thres,
+                                     pt_value=pt_value, device=device, conf_thres=conf_thres,
                                     iou_thres=iou_thres)
 
         except KeyboardInterrupt:
