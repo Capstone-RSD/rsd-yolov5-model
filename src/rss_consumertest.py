@@ -18,7 +18,7 @@ from confluent_kafka import Consumer
 # from confluent_kafka.serialization import SerializationContext, MessageField
 
 from google.protobuf import json_format
-# import generated.rss_client_pb2 as RSSClient
+from generated.rss_client_pb2 import Client  # uncomment this line
 from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
@@ -94,14 +94,4 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
-                                     pt=pt, device=device, conf_thres=conf_thres,
-                                    iou_thres=iou_thres)
-
-        except KeyboardInterrupt:
-            break
-
-    # Close Kafka consumer
-    consumer.close()
-
-if __name__ == '__main__':
-    Parser = argparse.ArgumentParser
+                                     pt=pt, device=device
