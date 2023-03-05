@@ -1,10 +1,10 @@
-import google.protobuf.json_format
 import unittest
 import argparse
 from unittest.mock import patch
 from parameterized import parameterized
 from io import StringIO
 from rss_consumer import main
+import google.protobuf.json_format
 
 class TestClientInitialization(unittest.TestCase):
 
