@@ -18,6 +18,7 @@ from yolov5.utils.torch_utils import select_device
 
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 # Set the logging level to INFO
 logging.basicConfig(level=logging.INFO)
@@ -25,6 +26,7 @@ logging.basicConfig(level=logging.INFO)
 # Load environment variables
 load_dotenv(find_dotenv())
 
+# pylint: disable=too-many-locals
 def main(args):
     """
     Main function that subscribes to a Kafka topic and processes incoming messages
