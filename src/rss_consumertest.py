@@ -19,6 +19,8 @@ from yolov5.utils.torch_utils import select_device
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
 
+from rss_client_pb2 import Client
+
 # Set the logging level to INFO
 logging.basicConfig(level=logging.INFO)
 
