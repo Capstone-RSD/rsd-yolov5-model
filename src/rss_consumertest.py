@@ -78,7 +78,7 @@ def main(args):
                 continue
 
             # Deserialize incoming message
-            rssClient = RSSClient.Client()
+            rss_client = Client()
             client = json_format.Parse(msg.value(), rss_client, ignore_unknown_fields=True)
             if client is not None:
                 logging.info("Incoming message: %s", client)
