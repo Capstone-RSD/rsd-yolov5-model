@@ -97,4 +97,4 @@ def main(args):
                                      pt=pt, device=device)
                     
     except Exception as e:
-        logging.error("Error processing message: %s", str(e))
+        logging.error("An error occurred: %s", e)
