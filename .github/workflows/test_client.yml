@@ -25,7 +25,7 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           cd src/
-          pylint rss_consumer.py
+          pylint rss_consumertest.py
   test:
     runs-on: ubuntu-latest
     strategy:
