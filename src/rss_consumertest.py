@@ -18,7 +18,6 @@ from yolov5.utils.torch_utils import select_device
 
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 # Set the logging level to INFO
 logging.basicConfig(level=logging.INFO)
@@ -59,7 +58,7 @@ def main(args):
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
-    stride, pt = model.stride, model.pt
+    stride, pt_file = model.stride, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     # Set up Kafka consumer
@@ -90,7 +89,7 @@ def main(args):
                 if img is not None:
                     model_inference(imagePath=download_blob(image_blob.blob_url),
                                     model=model, imgsz=imgsz, stride=stride,
-                                    pt=pt, device=device, conf_thres=conf_thres,
+                                    pt=pt_file, device=device, conf_thres=conf_thres,
                                     iou_thres=iou_thres)
 
         except KeyboardInterrupt:
