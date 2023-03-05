@@ -104,4 +104,4 @@ def main(args):
     consumer.close()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser
+    Parser = argparse.ArgumentParser
