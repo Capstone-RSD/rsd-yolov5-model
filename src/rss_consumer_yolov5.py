@@ -1,14 +1,14 @@
 import torch
-
+import logging
 from yolov5.utils.general import (cv2,non_max_suppression, scale_boxes)
 from yolov5.utils.torch_utils import time_sync
 
 import numpy as np
 from yolov5.utils.augmentations import letterbox
-from generated.rss_payload_pb2 import DamagePayload
+from generated.rss_schema_pb2 import DamagePayload
 
 def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou_thres):
-    
+
     nparr = np.fromstring(imagePath, np.uint8)
 
     img0 = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -52,10 +52,10 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
         confidence=np.array(det[:,-2].cpu())
         box=np.array(pred2.cpu())
         classification=np.array(det[:,-1].cpu())
-        print(det.shape)
-        print('box: '+str(box))
-        print('class: '+str(classification))
-        print('confidence: '+str(confidence))        
+        # logging.info(det.shape)
+        # logging.info('box: '+str(box))
+        # logging.info('class: '+str(classification))
+        # logging.info('confidence: '+str(confidence))
 
         #Calculate Lenth, Width, and get Class name
         # image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -63,14 +63,13 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
         count = 0
         for x in classification:
             payload = DamagePayload()
-            payload.damage_class = class_name[x]
-            payload.damage_width = abs(box[count, 0] - box[count, 2])
-            payload.damage_length = abs(box[count, 1] - box[count, 3])
+            payload.damage_class = class_name[int(x)]
+            payload.damage_width = int(abs(box[count, 0] - box[count, 2]))
+            payload.damage_length = int(abs(box[count, 1] - box[count, 3]))
             damages_payload.append(payload)
             count=count+1
-            print('payload: ', damages_payload)
             #Draw boxes on image
             # cv2.rectangle(image, (box[count, 0], box[count, 1]), (box[count, 2], box[count, 3]), (255,0,0), 2)
+        logging.info('payload: ', damages_payload)
 
     return damages_payload
-            
