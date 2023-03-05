@@ -4,18 +4,18 @@ This module contains tests for the rss_consumer module.
 
 import argparse
 import logging
-import os
-import sys
-from pathlib import Path
+# import os
+# import sys
+# from pathlib import Path
 
 import torch
 from dotenv import load_dotenv, find_dotenv
-from torch.backends import cudnn
+# from torch.backends import cudnn
 
 from confluent_kafka import Consumer
-from confluent_kafka.schema_registry.protobuf import ProtobufDeserializer
-from confluent_kafka.schema_registry import SchemaRegistryClient
-from confluent_kafka.serialization import SerializationContext, MessageField
+# from confluent_kafka.schema_registry.protobuf import ProtobufDeserializer
+# from confluent_kafka.schema_registry import SchemaRegistryClient
+# from confluent_kafka.serialization import SerializationContext, MessageField
 
 from google.protobuf import json_format
 # from generated.rss_client_pb2 import Client
