@@ -50,6 +50,7 @@ def main(args):
     }
 
     # Set up YOLOv5 configuration
+    # pylint: disable=no-member
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     weights = '../best.pt'
     data = 'pavement-cracks-1/data.yaml'
@@ -62,7 +63,7 @@ def main(args):
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
-    stride, names, pt = model.stride, model.names, model.pt
+    stride, point = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     # Set up Kafka consumer
