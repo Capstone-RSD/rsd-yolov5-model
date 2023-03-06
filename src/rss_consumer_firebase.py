@@ -24,7 +24,7 @@ def upload_map_to_firebase():
 
     # Put your local file path
     # TODO: #14 replace file path to generated neo4j map cluster html markup
-    fileName = "<PLACE PATH TO FILE HERE>"
+    fileName = "neo_map.html"
     bucket = storage.bucket()
     blob = bucket.blob("map-markup/"+fileName)
     blob.upload_from_filename(fileName)

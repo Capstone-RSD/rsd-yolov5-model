@@ -2,6 +2,7 @@ import json
 from neo4j import GraphDatabase
 import folium
 from folium.plugins import MarkerCluster
+from rss_consumer_firebase import upload_map_to_firebase
 
 # 'json' library to parse JSON -> create nodes and relationships
 
@@ -53,3 +54,4 @@ class JsonToNeo4j:
           print("Value/type error occured during map creation")
           break
       map.save("neo_map.html")
+      upload_map_to_firebase()
