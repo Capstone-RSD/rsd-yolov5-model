@@ -5,6 +5,8 @@ import os
 from confluent_kafka import Consumer
 from generated.rss_schema_pb2 import Client, RSSPayload
 import google.protobuf.json_format
+from google.protobuf.json_format import MessageToJson
+from rss_consumer_neo4j import JsonToNeo4j
 
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
@@ -68,6 +70,8 @@ def main(args):
 
     consumer = Consumer(consumer_conf)
     consumer.subscribe([topic])
+    
+    neo4j = JsonToNeo4j(args.db_uri,args.db_username,args.db_password)
 
     while True:
         try:
@@ -95,14 +99,17 @@ def main(args):
                 if img is not None:
                     rssPayload.damagePayload.extend(model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
                     pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres))
-
-
-
+                
+                js_obj = MessageToJson(rssPayload,preserving_proto_field_name=True)
+                print(js_obj)
+        
+                neo4j.create_nodes(js_obj)
+                
         except KeyboardInterrupt:
             break
 
     consumer.close()
-
+    neo4j.close()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ProtobufDeserializer example")
@@ -115,8 +122,15 @@ if __name__ == '__main__':
     parser.add_argument('-g', dest="group", default="example_serde_protobuf",
                         help="Consumer group")
     parser.add_argument('--cluster_key', dest="cluster_key", default=os.getenv("CLUSTER_API_KEY"),
-                        help="Cluster API Key")
+                        help="Cluster API Key") 
     parser.add_argument('--cluster_secret', dest="cluster_secret", default=os.getenv("CLUSTER_API_SECRET"),
                         help="Cluster API Secret")
+    
+    parser.add_argument('--neo4j_db_password', dest="db_password", default=os.getenv("NEO4J_DB_PASSWORD"),
+                        help="Neo4j DB Password")
+    parser.add_argument('--neo4j_db_username', dest="db_username", default=os.getenv("NEO4J_DB_USERNAME"),
+                        help="Neo4j DB Username")
+    parser.add_argument('--neo4j_db_uri', dest="db_uri", default=os.getenv("NEO4J_DB_URI"),
+                        help="Neo4j DB Uri")    
 
     main(parser.parse_args())
