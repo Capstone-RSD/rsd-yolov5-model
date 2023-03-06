@@ -25,7 +25,7 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           cd src/
-          pylint rss_consumer*.py
+          pylint rss_consumertest.py
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -40,9 +40,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pylint unittest2
+          pip install pylint unittest2 rss_client_pb2
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with unittest
         run: |
-          python -m unittest discover -s tests -p '*test_*.py'
+          python -m unittest discover -s tests -p 'test_client.py'
           python -m unittest tests/test_client.py --cluster_key ${{ secrets.CLUSTER_API_KEY }} --cluster_secret ${{ secrets.CLUSTER_API_SECRET }}

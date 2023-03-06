@@ -1,22 +1,13 @@
 import argparse
-import json
+import logging
 from dotenv import load_dotenv,find_dotenv
 import os
 from confluent_kafka import Consumer
-# import rss_payload_pb2 as RSSPayload
-import generated.rss_client_pb2 as RSSClient
-# import jsonformat as JsonFormat
+from generated.rss_schema_pb2 import Client, RSSPayload
 import google.protobuf.json_format
-
-from confluent_kafka.serialization import SerializationContext, MessageField
-from confluent_kafka.schema_registry.protobuf import ProtobufDeserializer
-
-from confluent_kafka.schema_registry import SchemaRegistryClient
 
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
-
-from rss_consumer_neo4j import JsonToNeo4j
 
 import sys
 from pathlib import Path
@@ -82,35 +73,35 @@ def main(args):
         try:
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
-            #consumer.get_watermark_offsets()
             if msg is None:
                 continue
             # rssClient = protobuf_deserializer(msg.value(), SerializationContext(topic, MessageField.VALUE))
-            print(msg.value())
-            rssClient = RSSClient.Client();
-            client = google.protobuf.json_format.Parse(msg.value(),rssClient,ignore_unknown_fields=True)
+            logging.info(msg.value())
+            # rssClient = Client()
+            rssPayload = RSSPayload()
+            client = google.protobuf.json_format.Parse(msg.value(),rssPayload.client,ignore_unknown_fields=True)
             if client is not None:
-
-                # Prints out hte client
-                print("Client: ",client)
-                print("Client blob_url: ",client.blobs[0].blob_url)
+                # logs out hte client
+                logging.info("Client: ",client)
+                logging.info("Client blob_url: ",client.blobs[0].blob_url)
 
                 # downloads the blob prior to inferencing
                 image_blob = client.blobs[0]
                 if image_blob.image == "image":
                     img = download_blob(image_blob.blob_url)
                 else:
-                    print("Video blob type expected")
+                    logging.error("Video blob type expected")
 
                 if img is not None:
-                    model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
-                    pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres)
+                    rssPayload.damagePayload.extend(model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
+                    pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres))
+
 
 
         except KeyboardInterrupt:
             break
 
-# consumer.close()
+    consumer.close()
 
 
 if __name__ == '__main__':
