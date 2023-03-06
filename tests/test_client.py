@@ -4,6 +4,7 @@ import argparse
 from confluent_kafka import Consumer, Producer
 from dotenv import load_dotenv, find_dotenv
 import os
+from generated.rss_schema_pb2 import Client, RSSPayload
 
 load_dotenv(find_dotenv())
 
