@@ -2,10 +2,12 @@ import argparse
 import logging
 from dotenv import load_dotenv,find_dotenv
 import os
+import datetime
+import json
 from confluent_kafka import Consumer
 from generated.rss_schema_pb2 import Client, RSSPayload
-import google.protobuf.json_format
-from google.protobuf.json_format import MessageToJson
+
+from google.protobuf.json_format import MessageToJson,Parse
 from rss_consumer_neo4j import JsonToNeo4j
 
 from rss_consumer_firebase import download_blob
@@ -55,8 +57,8 @@ def main(args):
                      "session.timeout.ms":45000}
 
     device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    weights='../best.pt'
-    data='pavement-cracks-1/data.yaml'
+    weights=os.path.abspath('../best.pt')
+    data=os.path.abspath('../data.yaml')
     conf_thres=0.4
     iou_thres=0.45
     imgsz=[416,416]
@@ -70,8 +72,10 @@ def main(args):
 
     consumer = Consumer(consumer_conf)
     consumer.subscribe([topic])
-
-    neo4j = JsonToNeo4j(args.db_uri,args.db_username,args.db_password)
+         
+    uri = "neo4j+s://b9fcdf96.databases.neo4j.io:7687"    
+    username = "neo4j"    
+    password = "34MNGQ5IQM38tozXI6E7Hd7ANdIo_VjuWBwlNA1YjWs"    
 
     while True:
         try:
@@ -83,27 +87,43 @@ def main(args):
             logging.info(msg.value())
             # rssClient = Client()
             rssPayload = RSSPayload()
-            client = google.protobuf.json_format.Parse(msg.value(),rssPayload.client,ignore_unknown_fields=True)
+            client = Parse(msg.value(),rssPayload.client,ignore_unknown_fields=True)
             if client is not None:
                 # logs out hte client
-                logging.info("Client: ",client)
-                logging.info("Client blob_url: ",client.blobs[0].blob_url)
+                print("Client: ",client)
+                if len(client.blobs) > 0:
+                    if client.blobs[0] is not None:
+                        
+                        print("Client blob_url: ",client.blobs[0].blob_url)
 
-                # downloads the blob prior to inferencing
-                image_blob = client.blobs[0]
-                if image_blob.image == "image":
-                    img = download_blob(image_blob.blob_url)
-                else:
-                    logging.error("Video blob type expected")
+                        #downloads the blob prior to inferencing
+                        image_blob = client.blobs[0]
+                        if image_blob.image == "image":
+                            img = download_blob(image_blob.blob_url)
+                        else:
+                            logging.error("Video blob type expected")
 
-                if img is not None:
-                    rssPayload.damagePayload.extend(model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
-                    pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres))
+                        if img is not None:
+                            rssPayload.damagePayload.extend(model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
+                            pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres))
+                        
+                        js_obj = {
+                                    "name": client.name,
+                                    "id": client.id,
+                                    "email": client.email,
+                                    "latitude": client.damageLocation.lat_lng.latitude,
+                                    "longitude": client.damageLocation.lat_lng.longitude,
+                                    "speed": client.speed,
+                                    "blob_url": client.blobs[0].blob_url,
+                                    # "datetime_created": client.blobs[0].datetime_created,
+                                    # "type": client.blobs[0].blob_type,
+                                    # "damagePayload": rssPayload.damagePayload
+                                    }
+                        
+                        print(js_obj)
 
-                js_obj = MessageToJson(rssPayload,preserving_proto_field_name=True)
-                print(js_obj)
-
-                neo4j.create_nodes(json_data=js_obj)
+                        neo4j = JsonToNeo4j(uri, username, password)
+                        neo4j.create_nodes(json_data=js_obj)
 
         except KeyboardInterrupt:
             break

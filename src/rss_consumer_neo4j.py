@@ -1,6 +1,7 @@
 import json
 from neo4j import GraphDatabase
 import folium
+from folium.plugins import MarkerCluster
 
 # 'json' library to parse JSON -> create nodes and relationships
 
@@ -17,34 +18,37 @@ class JsonToNeo4j:
         with self.driver.session() as session:
             query = "CREATE (r:Report { data: $data })"
             session.run(query, data=json.dumps(json_data))
-        map = folium.Map(location=[43.945082, -78.896740], zoom_start=13)
-        self.create_markers(map=map)
+            map = folium.Map(location=[43.945082, -78.896740], zoom_start=13)
+            self.create_markers(map=map, session=session)
 
     # Query to retrieve nodes that have lat and long properties. Returns list of dictionaries.
-    def get_nodes_with_location(self):
+    def get_nodes_with_location(self, session):
       with self.driver.session() as session:
         query = """
-          MATCH (n:Node)
-          WHERE EXISTS(n.latitude) AND EXISTS(n.longitude)
-          RETURN n
+        MATCH (n) RETURN n.data
         """
-      result = session.run(query)
-      nodes = []
-      for record in result:
-        node = record["n"]
-        nodes.append(node)
-      return nodes
+        result = session.run(query)
+        nodes = []
+        for record in result:
+          node = json.loads(record["n.data"])
+          nodes.append(node)
+        return nodes
 
-    def create_markers(self, map):
-      nodes = self.get_nodes_with_location()
-      print("Nodes: ",nodes)
+    def create_markers(self, map, session):
+      nodes = self.get_nodes_with_location(session)
+      cluster = MarkerCluster(options={'showCoverageOnHover': False,
+                                        'zoomToBoundsOnClick': True,
+                                        'spiderfyOnMaxZoom': False,
+                                        'disableClusteringAtZoom': 16}).add_to(map)
       for node in nodes:
         try:
-          lat = float(node["latitude"])
-          lon = float(node["longitude"])
-          marker = folium.Marker(location=[lat, lon])
-          print("Longitude: %s",lon)
-          marker.add_to(map)
+          print(node)
+          if node["latitude"] is not None and node["longitude"] is not None:
+            lat = float(node["latitude"])
+            lon = float(node["longitude"])
+            popup = folium.Popup(str(node), max_width=600, max_height=600)
+            marker = folium.Marker(location=[lat, lon], popup=popup)
+            marker.add_to(cluster)
         except (ValueError, TypeError):
           print("Value/type error occured during map creation")
           break
