@@ -7,6 +7,9 @@ from confluent_kafka import Consumer, Producer
 from dotenv import load_dotenv, find_dotenv
 import os
 import requests
+from yolov5.models.common import DetectMultiBackend
+from yolov5.utils.general import check_img_size
+import torch
 
 load_dotenv(find_dotenv())
 
@@ -68,13 +71,16 @@ class TestClient(unittest.TestCase):
     def test_model_inference(self):
 
         # Set the required parameters
-        model = model
-        imgsz = 224
-        stride = 32
-        pt = "cpu"
-        device = "cpu"
-        conf_thres = 0.5
-        iou_thres = 0.5
+        weights='../best.pt'
+        data='pavement-cracks-1/data.yaml'
+        model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
+        imgsz=[416,416]
+        imgsz = check_img_size(imgsz, s=stride)  # check image size
+        stride = model.stride
+        pt = model.pt
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        conf_thres = 0.4
+        iou_thres = 0.45
 
         client = RSSPayload
 
@@ -86,8 +92,8 @@ class TestClient(unittest.TestCase):
             self.fail("Video blob type expected")
 
         if img is not None:
-            model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
-            pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres)
+            model_inference(imagePath=download_blob(image_blob.blob_url), model=DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False), imgsz=[416,416], stride=model.stride,
+            pt=model.pt, device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu"), conf_thres=0.4, iou_thres=0.45)
 
 class TestConsumer(unittest.TestCase):
     def test_consumer_consume(self):
@@ -166,3 +172,24 @@ class TestProducer(unittest.TestCase):
         # Close the consumer and producer
         consumer.close()
         producer.close()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="ProtobufDeserializer example")
+    parser.add_argument('-b', dest="bootstrap_servers", required=False,
+                        help="Bootstrap broker(s) (host[:port])", default="pkc-v12gj.northamerica-northeast2.gcp.confluent.cloud:9092")
+    parser.add_argument('-s', dest="schema_registry", required=False,
+                        help="Schema Registry (http(s)://host[:port]",default="https://psrc-mw0d1.us-east-2.aws.confluent.cloud")
+    parser.add_argument('-t', dest="topic", default="rss_topic",
+                        help="Topic name")
+    parser.add_argument('-g', dest="group", default="example_serde_protobuf",
+                        help="Consumer group")
+    parser.add_argument('--cluster_key', dest="cluster_key", default=os.getenv("CLUSTER_API_KEY"),
+                        help="Cluster API Key")
+    parser.add_argument('--cluster_secret', dest="cluster_secret", default=os.getenv("CLUSTER_API_SECRET"),
+                        help="Cluster API Secret")
+    args = parser.parse_args()
+    TestClient.topic = args.topic
+    TestClient.sasl_username = args.cluster_key
+    TestClient.sasl_password = args.cluster_secret
+    unittest.main()
