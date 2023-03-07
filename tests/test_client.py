@@ -1,10 +1,12 @@
 import unittest
-from generated.rss_schema_pb2 import Client, RSSPayload
+from src.generated.rss_schema_pb2 import Client, RSSPayload
 import argparse
+from src.rss_consumer_firebase import download_blob
+from src.rss_consumer_yolov5 import model_inference
 from confluent_kafka import Consumer, Producer
 from dotenv import load_dotenv, find_dotenv
 import os
-from generated.rss_schema_pb2 import Client, RSSPayload
+import requests
 
 load_dotenv(find_dotenv())
 
@@ -22,11 +24,21 @@ class TestClient(unittest.TestCase):
                      "sasl.username": sasl_username,
                      "sasl.password": sasl_password,
                      "session.timeout.ms": 45000}
+    
+    # create a Kafka consumer
+    consumer = Consumer(consumer_conf)
+
+    # define a serialized Client object
+    client = Client(blobs=[RSSPayload(title="Test Title", description="Test Description", url="http://example.com")])
+    serialized_client = client.SerializeToString()
+
+    # set msg variable to the serialized client
+    msg = serialized_client
 
     def test_client_initialization(self):
         # Create a Client object from a serialized message
         client = Client()
-        client.ParseFromString(msg.value())
+        client.ParseFromString(self.msg)
 
         # Check if the client is not None
         self.assertIsNotNone(client)
@@ -39,7 +51,22 @@ class TestClient(unittest.TestCase):
         blob = client.blobs[0]
         self.assertTrue(hasattr(blob, "blob_url"))
 
+    @staticmethod
+    def download_blob(url):
+        # Send an HTTP request to the URL of the image and get the response
+        response = requests.get(url)
+
+        # Check if the response was successful (status code 200)
+        if response.status_code == 200:
+            # Convert the response content to bytes
+            content = response.content
+            return content
+        else:
+            # If the response was not successful, return None
+            return None
+
     def test_model_inference(self):
+
         # Set the required parameters
         model = model
         imgsz = 224
@@ -48,6 +75,8 @@ class TestClient(unittest.TestCase):
         device = "cpu"
         conf_thres = 0.5
         iou_thres = 0.5
+
+        client = RSSPayload
 
         # Download the blob and run the model inference
         image_blob = client.blobs[0]
@@ -137,22 +166,3 @@ class TestProducer(unittest.TestCase):
         # Close the consumer and producer
         consumer.close()
         producer.close()
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="ProtobufDeserializer example")
-    parser.add_argument('-b', dest="bootstrap_servers", required=False,
-                        help="Bootstrap broker(s) (host[:port])", default="pkc-v12gj.northamerica-northeast2.gcp.confluent.cloud:9092")
-    parser.add_argument('-s', dest="schema_registry", required=False,
-                        help="Schema Registry (http(s)://host[:port]",default="https://psrc-mw0d1.us-east-2.aws.confluent.cloud")
-    parser.add_argument('-t', dest="topic", default="rss_topic",
-                        help="Topic name")
-    parser.add_argument('-g', dest="group", default="example_serde_protobuf",
-                        help="Consumer group")
-    parser.add_argument('--cluster_key', dest="cluster_key", default=os.getenv("CLUSTER_API_KEY"),
-                        help="Cluster API Key")
-    parser.add_argument('--cluster_secret', dest="cluster_secret", default=os.getenv("CLUSTER_API_SECRET"),
-                        help="Cluster API Secret")
-    args = parser.parse_args()
-    TestClient.topic = args.topic
-    unittest.main()
