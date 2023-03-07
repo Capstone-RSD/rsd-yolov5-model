@@ -75,14 +75,16 @@ def main(args):
 
 
 
+    neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
     while True:
         try:
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
             if msg is None:
-                continue
+                print("msg was none. exiting...")
+                break
             # rssClient = protobuf_deserializer(msg.value(), SerializationContext(topic, MessageField.VALUE))
-            logging.info(msg.value())
+            print(msg.value())
             # rssClient = Client()
             rssPayload = RSSPayload()
             client = Parse(msg.value(),rssPayload.client,ignore_unknown_fields=True)
@@ -119,7 +121,6 @@ def main(args):
                                             "damagePayload": damagePayload
                                             }
 
-                                neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
                                 neo4j.create_nodes(json_data=js_obj)
 
         except KeyboardInterrupt:
