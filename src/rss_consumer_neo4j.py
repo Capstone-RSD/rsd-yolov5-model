@@ -43,7 +43,6 @@ class JsonToNeo4j:
                                         'disableClusteringAtZoom': 16}).add_to(map)
       for node in nodes:
         try:
-          print(node)
           if node["latitude"] is not None and node["longitude"] is not None:
             lat = float(node["latitude"])
             lon = float(node["longitude"])

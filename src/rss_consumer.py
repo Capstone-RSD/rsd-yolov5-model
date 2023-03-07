@@ -72,10 +72,8 @@ def main(args):
 
     consumer = Consumer(consumer_conf)
     consumer.subscribe([topic])
-         
-    uri = "neo4j+s://b9fcdf96.databases.neo4j.io:7687"    
-    username = "neo4j"    
-    password = "34MNGQ5IQM38tozXI6E7Hd7ANdIo_VjuWBwlNA1YjWs"    
+
+
 
     while True:
         try:
@@ -93,8 +91,8 @@ def main(args):
                 print("Client: ",client)
                 if len(client.blobs) > 0:
                     if client.blobs[0] is not None:
-                        
-                        print("Client blob_url: ",client.blobs[0].blob_url)
+
+                        logging.debug("Client blob_url: ",client.blobs[0].blob_url)
 
                         #downloads the blob prior to inferencing
                         image_blob = client.blobs[0]
@@ -104,26 +102,25 @@ def main(args):
                             logging.error("Video blob type expected")
 
                         if img is not None:
-                            rssPayload.damagePayload.extend(model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
-                            pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres))
-                        
-                        js_obj = {
-                                    "name": client.name,
-                                    "id": client.id,
-                                    "email": client.email,
-                                    "latitude": client.damageLocation.lat_lng.latitude,
-                                    "longitude": client.damageLocation.lat_lng.longitude,
-                                    "speed": client.speed,
-                                    "blob_url": client.blobs[0].blob_url,
-                                    # "datetime_created": client.blobs[0].datetime_created,
-                                    # "type": client.blobs[0].blob_type,
-                                    # "damagePayload": rssPayload.damagePayload
-                                    }
-                        
-                        print(js_obj)
+                            damagePayload = model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
+                            pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres)
 
-                        neo4j = JsonToNeo4j(uri, username, password)
-                        neo4j.create_nodes(json_data=js_obj)
+                            if len(damagePayload) > 0:
+                                js_obj = {
+                                            "name": client.name,
+                                            "id": client.id,
+                                            "email": client.email,
+                                            "latitude": client.damageLocation.lat_lng.latitude,
+                                            "longitude": client.damageLocation.lat_lng.longitude,
+                                            "speed": client.speed,
+                                            "blob_url": client.blobs[0].blob_url,
+                                            # "datetime_created": client.blobs[0].datetime_created,
+                                            # "type": client.blobs[0].blob_type,
+                                            "damagePayload": damagePayload
+                                            }
+
+                                neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
+                                neo4j.create_nodes(json_data=js_obj)
 
         except KeyboardInterrupt:
             break
