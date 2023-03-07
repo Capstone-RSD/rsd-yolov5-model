@@ -61,11 +61,17 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
         # image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         class_name = ['alligator cracking', 'edge cracking', 'longitudinal cracking', 'patching', 'pothole', 'rutting', 'transverse cracking']
         count = 0
+        # payload = [] # TODO: fix this
         for x in classification:
-            payload = DamagePayload()
-            payload.damage_class = class_name[int(x)]
-            payload.damage_width = int(abs(box[count, 0] - box[count, 2]))
-            payload.damage_length = int(abs(box[count, 1] - box[count, 3]))
+            payload={
+                        "damage_class": class_name[int(x)],
+                        "damage_width": int(abs(box[count, 0] - box[count, 2])),
+                        "damage_length": int(abs(box[count, 1] - box[count, 3]))
+                    }
+            # payload = DamagePayload()
+            # payload.damage_class = class_name[int(x)]
+            # payload.damage_width = int(abs(box[count, 0] - box[count, 2]))
+            # payload.damage_length = int(abs(box[count, 1] - box[count, 3]))
             damages_payload.append(payload)
             count=count+1
             #Draw boxes on image
