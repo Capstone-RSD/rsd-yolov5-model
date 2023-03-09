@@ -81,7 +81,6 @@ def main(args):
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
             if msg is None:
-                print("No message received")
                 continue
             # rssClient = protobuf_deserializer(msg.value(), SerializationContext(topic, MessageField.VALUE))
             logging.info(msg.value())
@@ -122,6 +121,8 @@ def main(args):
                         print(js_obj)
 
                         neo4j.create_nodes(json_data=js_obj)
+                    else:
+                        print("No damage detected.")
 
         except KeyboardInterrupt:
             break
