@@ -4,8 +4,11 @@ from dotenv import load_dotenv,find_dotenv
 import os
 import datetime
 import json
-from confluent_kafka import Consumer
+from confluent_kafka import Consumer, Producer
 from generated.rss_schema_pb2 import Client, RSSPayload
+from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
+from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.schema_registry.protobuf import ProtobufSerializer
 
 from google.protobuf.json_format import MessageToJson,Parse
 from rss_consumer_neo4j import JsonToNeo4j
@@ -28,23 +31,40 @@ from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.general import check_img_size
 from yolov5.utils.torch_utils import select_device
 
-# def configure():
 load_dotenv(find_dotenv())
+
+def delivery_report(err, msg):
+    """
+    Reports the failure or success of a message delivery.
+    Args:
+        err (KafkaError): The error that occurred on None on success.
+        msg (Message): The message that was produced or failed.
+    """
+
+    if err is not None:
+        print("Delivery failed for User record {}: {}".format(msg.key(), err))
+        return
+    print('User record {} successfully produced to {} [{}] at offset {}'.format(
+        msg.key(), msg.topic(), msg.partition(), msg.offset()))
 
 def main(args):
 
     topic = args.topic
 
-    # schema_registry_conf = {'url': args.schema_registry,
-    #                         "basic.auth.credentials.source":"USER_INFO",
-    #                         "basic.auth.user.info":os.getenv('SR_API_KEY')+":"+os.getenv('SR_API_SECRET'),
-    #                         'use.deprecated.format': False
-    #                         }
+    schema_registry_conf = {'url': args.schema_registry,
+                            "basic.auth.credentials.source":"USER_INFO",
+                            "basic.auth.user.info":os.getenv('SR_API_KEY')+":"+os.getenv('SR_API_SECRET'),
+                            'use.deprecated.format': False
+                            }
 
-    # schema_registry_client = SchemaRegistryClient(schema_registry_conf)
+    schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
-    # protobuf_deserializer = ProtobufDeserializer(RSSClient.Client,
-    #                                              schema_registry_conf)
+    protobuf_serializer = ProtobufSerializer(RSSPayload,schema_registry_client,
+                                                 schema_registry_conf)
+
+    producer_conf = {'bootstrap.servers': args.bootstrap_servers,}
+
+    producer = Producer(producer_conf)
 
     consumer_conf = {'bootstrap.servers': args.bootstrap_servers,
                      'group.id': args.group,
@@ -57,8 +77,8 @@ def main(args):
                      "session.timeout.ms":45000}
 
     device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    weights=os.path.abspath('../best.pt')
-    data=os.path.abspath('../data.yaml')
+    weights=os.path.abspath('best.pt')
+    data=os.path.abspath('data.yaml')
     conf_thres=0.4
     iou_thres=0.45
     imgsz=[416,416]
@@ -78,6 +98,8 @@ def main(args):
     neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
     while True:
         try:
+            # Serve on_delivery callbacks from previous calls to produce()
+            producer.poll(0.0)
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
             if msg is None:
@@ -121,6 +143,14 @@ def main(args):
                         print(js_obj)
 
                         neo4j.create_nodes(json_data=js_obj)
+
+                        print("Producing records to topic {}. ^C to exit.".format(topic))
+
+                        producer.produce(topic=topic, partition=0,
+                             key=None, #string_serializer(str(uuid4())),
+                             value=protobuf_serializer(user, SerializationContext(topic, MessageField.VALUE)),
+                             on_delivery=delivery_report)
+
                     else:
                         print("No damage detected.")
 
@@ -129,6 +159,9 @@ def main(args):
 
     consumer.close()
     neo4j.close()
+
+    print("\nFlushing records...")
+    producer.flush()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ProtobufDeserializer example")

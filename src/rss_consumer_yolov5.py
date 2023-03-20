@@ -26,7 +26,7 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
     model.warmup(imgsz=(1 if pt else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], [0.0, 0.0, 0.0]
     t1 = time_sync()
-    im = torch.from_numpy(img).to(device).cuda(device)
+    im = torch.from_numpy(img).to(device)#.cuda(device)
     im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
     im /= 255  # 0 - 255 to 0.0 - 1.0
     if len(im.shape) == 3:
@@ -68,10 +68,12 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
                         "damage_width": int(abs(box[count, 0] - box[count, 2])),
                         "damage_length": int(abs(box[count, 1] - box[count, 3]))
                     }
-            # payload = DamagePayload()
-            # payload.damage_class = class_name[int(x)]
-            # payload.damage_width = int(abs(box[count, 0] - box[count, 2]))
-            # payload.damage_length = int(abs(box[count, 1] - box[count, 3]))
+
+            payload_proto = DamagePayload()
+            payload_proto.damage_class = class_name[int(x)]
+            payload_proto.damage_width = int(abs(box[count, 0] - box[count, 2]))
+            payload_proto.damage_length = int(abs(box[count, 1] - box[count, 3]))
+
             damages_payload.append(payload)
             count=count+1
             #Draw boxes on image
