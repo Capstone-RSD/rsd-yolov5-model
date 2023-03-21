@@ -2,22 +2,16 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
 {
 	"name": "RSD-YOLOV5-Model",
-	"build": {
-		// Sets the run context to one level up instead of the .devcontainer folder.
-		"context": "..",
-		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-		"dockerfile": "../Dockerfile"
-	},
+	// "build": {
+	// 	// Sets the run context to one level up instead of the .devcontainer folder.
+	// 	"context": "..",
+	// 	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+	// 	"dockerfile": "../Dockerfile"
+	// },
 
-	// "dockerComposeFile": [
-	// 	"../docker-compose.yml",
-	// 	"docker-compose.yml"
-	// ],
+	"image": "pytorch/pytorch:latest",
 
-	// "workspaceFolder": "/workspace",
-
-	// "service": "rsd-yolov5-model",
-
+	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {
 			"ppa": true,
@@ -30,22 +24,18 @@
 			"installCudnn": true,
 			"cudaVersion": "11.8",
 			"cudnnVersion": "8.6.0.163"
-		},
-		"ghcr.io/devcontainers-contrib/features/firebase-cli:2": {
-			"version": "latest"
 		}
 	},
 
 	"runArgs": ["--gpus=all", "--shm-size=6gb","--ipc=host"],
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Uncomment the next line to run commands after the container is created.
-	"postCreateCommand": "cat /etc/os-release",
+	// "postCreateCommand": ["cat /etc/os-release"],
+	"postCreateCommand": "apt-get update && apt-get install ffmpeg libsm6 libxext6 -y && pip install -U ipykernel && pip install -r requirements-dev.txt && cat /etc/os-release",
+	// "postStartCommand": "apt-get update && apt-get install ffmpeg libsm6 libxext6 -y && pip install -U ipykernel && pip install -r requirements-dev.txt",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -53,7 +43,7 @@
 			"extensions": [
 				"ms-python.python",
 				"ms-toolsai.jupyter"
-			]
+			],"settings": {}
 		}
 	},
 

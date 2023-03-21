@@ -1,13 +1,22 @@
 import torch
-
+import logging
 from yolov5.utils.general import (cv2,non_max_suppression, scale_boxes)
 from yolov5.utils.torch_utils import time_sync
 
 import numpy as np
 from yolov5.utils.augmentations import letterbox
+from generated.rss_schema_pb2 import DamagePayload
+
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t%(message)s",
+)
 
 def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou_thres):
-    
+    logger.info("Performing inference...")
+
     nparr = np.fromstring(imagePath, np.uint8)
 
     img0 = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -25,7 +34,7 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
     model.warmup(imgsz=(1 if pt else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], [0.0, 0.0, 0.0]
     t1 = time_sync()
-    im = torch.from_numpy(img).to(device).cuda(device)
+    im = torch.from_numpy(img).to(device)#.cuda(device)
     im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
     im /= 255  # 0 - 255 to 0.0 - 1.0
     if len(im.shape) == 3:
@@ -44,10 +53,40 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
 
     seen += 1
     det=pred[0]
+    damages_payload = []
     if len(det):
         # Rescale boxes from img_size to im0 size
         pred2=scale_boxes(im.shape[2:], det[:, :4], img0.shape).round()
-        print(det.shape)
-        print('box: '+str(np.array(pred2.cpu())))
-        print('class: '+str(det[:,-1].cpu()))
-        print('confidence: '+str(np.array(det[:,-2].cpu())))
+        confidence=np.array(det[:,-2].cpu())
+        box=np.array(pred2.cpu())
+        classification=np.array(det[:,-1].cpu())
+        # logging.info(det.shape)
+        # logging.info('box: '+str(box))
+        # logging.info('class: '+str(classification))
+        # logging.info('confidence: '+str(confidence))
+
+        #Calculate Lenth, Width, and get Class name
+        # image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        class_name = ['alligator cracking', 'edge cracking', 'longitudinal cracking', 'patching', 'pothole', 'rutting', 'transverse cracking']
+        count = 0
+        # payload = [] # TODO: fix this
+        for x in classification:
+            payload={
+                        "damage_class": class_name[int(x)],
+                        "damage_width": int(abs(box[count, 0] - box[count, 2])),
+                        "damage_length": int(abs(box[count, 1] - box[count, 3]))
+                    }
+
+            payload_proto = DamagePayload()
+            payload_proto.damage_class = class_name[int(x)]
+            payload_proto.damage_width = int(abs(box[count, 0] - box[count, 2]))
+            payload_proto.damage_length = int(abs(box[count, 1] - box[count, 3]))
+
+            damages_payload.append(payload)
+            count=count+1
+            #Draw boxes on image
+            # cv2.rectangle(image, (box[count, 0], box[count, 1]), (box[count, 2], box[count, 3]), (255,0,0), 2)
+        logger.info("Inference successful")
+        logger.debug('payload: ', damages_payload)
+
+    return damages_payload

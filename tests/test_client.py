@@ -1,57 +1,42 @@
 import unittest
-import argparse
-from unittest.mock import patch
-from parameterized import parameterized
-from io import StringIO
-from rss_consumer import main
-import google.protobuf.json_format
 
-class TestClientInitialization(unittest.TestCase):
+class TestClient(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.parser = argparse.ArgumentParser(description="Test client initialization")
-        cls.parser.add_argument('-b', dest="bootstrap_servers", required=False, default="localhost:9092",
-                                 help="Bootstrap broker(s) (host[:port])")
-        cls.parser.add_argument('-s', dest="schema_registry", required=False, default="localhost:8081",
-                                 help="Schema Registry (http(s)://host[:port]")
-        cls.parser.add_argument('-t', dest="topic", default="test_topic",
-                                 help="Topic name")
-        cls.parser.add_argument('-g', dest="group", default="test_group",
-                                 help="Consumer group")
+    def test_client_initialization(self):
+        # initialize the client
+        client = google.protobuf.json_format.Parse(msg.value(),rssClient,ignore_unknown_fields=True)
+        
+        # check if the client is not None
+        self.assertIsNotNone(client)
 
-    @parameterized.expand([
-        ({'bootstrap_servers': 'localhost:9092', 'schema_registry': 'localhost:8081', 'topic': 'test_topic', 'group': 'test_group'},),
-        ({'bootstrap_servers': '127.0.0.1:9092', 'schema_registry': '127.0.0.1:8081', 'topic': 'test_topic', 'group': 'test_group'},),
-    ])
-    @patch('sys.stdout', new_callable=StringIO)
-    @patch('builtins.input', side_effect=["image"])
-    @patch('rss_consumer.download_blob', return_value="test_image")
-    @patch('rss_consumer.model_inference')
-    def test_client_initialization(self, args, mock_stdout, mock_input, mock_download_blob, mock_model_inference):
-        main(self.parser.parse_args([]))
+        # check if the client has the required attributes
+        self.assertTrue(hasattr(client, "blobs"))
+        self.assertTrue(len(client.blobs) > 0)
 
-        # Check if the expected variables are not None
-        self.assertIsNotNone(args.bootstrap_servers)
-        self.assertIsNotNone(args.schema_registry)
-        self.assertIsNotNone(args.topic)
-        self.assertIsNotNone(args.group)
+        # check if the client blob has the required attributes
+        blob = client.blobs[0]
+        self.assertTrue(hasattr(blob, "blob_url"))
 
-        # Check if the expected messages are printed to the console
-        expected_output = "Client: "
-        self.assertIn(expected_output, mock_stdout.getvalue())
+    def test_model_inference(self):
+        # set the required parameters
+        model = model
+        imgsz = 224
+        stride = 32
+        pt = "cpu"
+        device = "cpu"
+        conf_thres = 0.5
+        iou_thres = 0.5
 
-    @patch('rss_consumer.load_model', return_value="test_model")
-    def test_model_inference(self, mock_load_model):
-        # Ensure that the model variable is properly initialized
-        model = mock_load_model.return_value
+        # download the blob and run the model inference
+        image_blob = client.blobs[0]
+        if image_blob.image == "image":
+            img = download_blob(image_blob.blob_url)
+        else:
+            self.fail("Video blob type expected")
 
-        # Test the model inference function
-        input_data = "test_input_data"
-        output_data = "test_output_data"
-        mock_model_inference.return_value = output_data
-        result = rss_consumer.model_inference(model, input_data)
-        self.assertEqual(result, output_data)
+        if img is not None:
+            model_inference(imagePath=download_blob(image_blob.blob_url), model=model, imgsz=imgsz, stride=stride,
+            pt=pt, device=device, conf_thres=conf_thres, iou_thres=iou_thres)
 
 if __name__ == '__main__':
     unittest.main()
