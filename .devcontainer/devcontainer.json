@@ -34,7 +34,8 @@
 
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": ["cat /etc/os-release"],
-	"postStartCommand": "apt-get update && apt-get install ffmpeg libsm6 libxext6 -y && pip install -U ipykernel && pip install -r requirements-dev.txt",
+	"postCreateCommand": "apt-get update && apt-get install ffmpeg libsm6 libxext6 -y && pip install -U ipykernel && pip install -r requirements-dev.txt && cat /etc/os-release",
+	// "postStartCommand": "apt-get update && apt-get install ffmpeg libsm6 libxext6 -y && pip install -U ipykernel && pip install -r requirements-dev.txt",
 
 	// Configure tool-specific properties.
 	"customizations": {

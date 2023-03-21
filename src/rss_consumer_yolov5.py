@@ -7,7 +7,15 @@ import numpy as np
 from yolov5.utils.augmentations import letterbox
 from generated.rss_schema_pb2 import DamagePayload
 
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t%(message)s",
+)
+
 def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou_thres):
+    logger.info("Performing inference...")
 
     nparr = np.fromstring(imagePath, np.uint8)
 
@@ -78,6 +86,7 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
             count=count+1
             #Draw boxes on image
             # cv2.rectangle(image, (box[count, 0], box[count, 1]), (box[count, 2], box[count, 3]), (255,0,0), 2)
-        logging.info('payload: ', damages_payload)
+        logger.info("Inference successful")
+        logger.debug('payload: ', damages_payload)
 
     return damages_payload

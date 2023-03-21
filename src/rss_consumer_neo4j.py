@@ -1,8 +1,16 @@
 import json
 from neo4j import GraphDatabase
 import folium
+import logging
 from folium.plugins import MarkerCluster
 from rss_consumer_firebase import upload_map_to_firebase
+
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t%(message)s",
+)
 
 # 'json' library to parse JSON -> create nodes and relationships
 
@@ -49,8 +57,10 @@ class JsonToNeo4j:
             popup = folium.Popup(str(node), max_width=600, max_height=600)
             marker = folium.Marker(location=[lat, lon], popup=popup)
             marker.add_to(cluster)
+            logger.info("Adding location marker")
         except (ValueError, TypeError):
-          print("Value/type error occured during map creation")
+          logging.exception("Value/type error occured during map creation")
           break
       map.save("neo_map.html")
       upload_map_to_firebase()
+      logger.info("Generating and uploading map")
