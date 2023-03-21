@@ -1,8 +1,9 @@
 import requests
 from firebase_admin import credentials, initialize_app, storage
+import os
 
 # Init firebase with your credentials
-cred = credentials.Certificate("rss-client-21d3b-firebase-private-key.json")
+cred = credentials.Certificate(os.path.abspath("src/rss-client-21d3b-firebase-private-key.json"))
 initialize_app(cred, {'storageBucket': 'rss-client-21d3b.appspot.com'})
 def download_blob(download_url):
     """

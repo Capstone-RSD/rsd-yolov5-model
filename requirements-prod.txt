@@ -1,0 +1,15 @@
+requests
+certifi
+confluent-kafka[json,protobuf]>=1.4.2
+protobuf
+firebase
+firebase-admin
+google-cloud-storage
+# opencv-python
+opencv-python-headless
+yolov5
+python-dotenv
+google-api-python-client
+markupsafe==2.0.1
+neo4j
+folium
