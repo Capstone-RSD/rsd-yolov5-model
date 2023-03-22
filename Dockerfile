@@ -8,5 +8,6 @@ COPY . /app
 
 RUN pip install -r requirements-prod.txt
 
+CMD ["ls -al && pwd"]
 
 CMD [ "python", "/app/src/rss_consumer.py" ]
