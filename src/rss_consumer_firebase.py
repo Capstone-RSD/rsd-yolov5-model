@@ -4,7 +4,8 @@ import os
 
 # Init firebase with your credentials
 firebase_path=os.path.abspath("/opt/firebase/rss-client-21d3b-firebase-private-key.json") if os.path.exists('/opt/firebase') else  os.path.abspath("src/rss-client-21d3b-firebase-private-key.json")
-cred = credentials.Certificate(os.path.abspath("src/rss-client-21d3b-firebase-private-key.json"))
+print(firebase_path)
+cred = credentials.Certificate(firebase_path)
 initialize_app(cred, {'storageBucket': 'rss-client-21d3b.appspot.com'})
 def download_blob(download_url):
     """
