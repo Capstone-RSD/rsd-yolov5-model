@@ -8,4 +8,5 @@ COPY . /app
 
 RUN pip install -r requirements-prod.txt && ls /app/src && pwd
 
-CMD [ "python", "-h" ]
+# CMD [ "python", "-h" ]
+CMD ["sleep", "1d"]
