@@ -6,8 +6,6 @@ WORKDIR /app
 COPY . /app
 # RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
-RUN pip install -r requirements-prod.txt
+RUN pip install -r requirements-prod.txt && ls -al && pwd
 
-CMD ["ls -al && pwd"]
-
-CMD [ "python", "/app/src/rss_consumer.py" ]
+CMD [ "python", "src/rss_consumer.py" ]
