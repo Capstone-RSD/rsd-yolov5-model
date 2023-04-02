@@ -122,6 +122,18 @@ def main(args):
                 continue
             logger.info("Waiting for events...")
             logger.debug("Consumed message: {}".format(msg.value()))
+
+            producer.produce(
+                            topic="rss_pres_topic",
+                            # partition=0,
+                            # key="payload",
+                            # value=protobuf_serializer(
+                            #     rssPayload, SerializationContext(topic, MessageField.VALUE)
+                            # ),
+                            value="Stage: Data processing - Event consumed on RSS Service",
+                            on_delivery=delivery_report,
+                        )
+
             rssPayload = RSSPayload()
             client = Parse(msg.value(), rssPayload.client, ignore_unknown_fields=True)
             if client is not None:
@@ -149,6 +161,17 @@ def main(args):
                         iou_thres=iou_thres,
                     )
 
+                    producer.produce(
+                            topic="rss_pres_topic",
+                            # partition=0,
+                            # key="payload",
+                            # value=protobuf_serializer(
+                            #     rssPayload, SerializationContext(topic, MessageField.VALUE)
+                            # ),
+                            value="Stage: Data processing - Event processed on RSS Service",
+                            on_delivery=delivery_report,
+                        )
+
                     if len(damagePayload) > 0:
                         js_obj = {
                             "name": client.name,
@@ -175,12 +198,13 @@ def main(args):
                         # rssPayload.client=client
 
                         producer.produce(
-                            topic="rss_topic_test",
+                            topic="rss_pres_topic",
                             partition=0,
-                            key="payload",
-                            value=protobuf_serializer(
-                                rssPayload, SerializationContext(topic, MessageField.VALUE)
-                            ),
+                            # key="payload",
+                            # value=protobuf_serializer(
+                            #     rssPayload, SerializationContext(topic, MessageField.VALUE)
+                            # ),
+                            value="Stage: Data processing - Payload stored on Neo4J Database and available on dashboard ",
                             on_delivery=delivery_report,
                         )
 
@@ -202,7 +226,7 @@ if __name__ == "__main__":
         dest="bootstrap_servers",
         required=False,
         help="Bootstrap broker(s) (host[:port])",
-        default="pkc-v12gj.northamerica-northeast2.gcp.confluent.cloud:9092",
+        default="pkc-4rn2p.canadacentral.azure.confluent.cloud:9092",
     )
     parser.add_argument(
         "-s",
