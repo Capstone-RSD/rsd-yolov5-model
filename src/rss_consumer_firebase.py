@@ -26,7 +26,7 @@ def upload_map_to_firebase():
     """
 
     # Put your local file path
-    fileName = "neo_map.html"
+    fileName = os.path.abspath("neo_map.html")
     bucket = storage.bucket()
     blob = bucket.blob("map-markup/"+fileName)
     blob.upload_from_filename(fileName)

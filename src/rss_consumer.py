@@ -33,7 +33,7 @@ from yolov5.utils.torch_utils import select_device
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t%(message)s",
 )
 load_dotenv(find_dotenv())
@@ -61,26 +61,26 @@ def main(args):
 
     topic = args.topic
 
-    schema_registry_conf = {
-        "url": args.schema_registry,
-        "basic.auth.user.info":os.getenv('SR_API_KEY')+":"+os.getenv('SR_API_SECRET'),
-    }
+    # schema_registry_conf = {
+    #     "url": args.schema_registry,
+    #     "basic.auth.user.info":os.getenv('SR_API_KEY')+":"+os.getenv('SR_API_SECRET'),
+    # }
 
-    schema_registry_client = SchemaRegistryClient(schema_registry_conf)
+    # schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
-    protobuf_serializer = ProtobufSerializer(
-        RSSPayload, schema_registry_client, {"use.deprecated.format": False}
-    )
+    # protobuf_serializer = ProtobufSerializer(
+    #     RSSPayload, schema_registry_client, {"use.deprecated.format": False}
+    # )
 
-    producer_conf = {
-        "bootstrap.servers": args.bootstrap_servers,
-        "security.protocol": "SASL_SSL",
-        "sasl.mechanisms": "PLAIN",
-        "sasl.username": args.cluster_key,
-        "sasl.password": args.cluster_secret,
-    }
+    # producer_conf = {
+    #     "bootstrap.servers": args.bootstrap_servers,
+    #     "security.protocol": "SASL_SSL",
+    #     "sasl.mechanisms": "PLAIN",
+    #     "sasl.username": args.cluster_key,
+    #     "sasl.password": args.cluster_secret,
+    # }
 
-    producer = Producer(producer_conf)
+    # producer = Producer(producer_conf)
 
     consumer_conf = {
         "bootstrap.servers": args.bootstrap_servers,
@@ -115,7 +115,7 @@ def main(args):
     while True:
         try:
             # Serve on_delivery callbacks from previous calls to produce()
-            producer.poll(0.0)
+            # producer.poll(0.0)
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
             if msg is None:
@@ -126,8 +126,12 @@ def main(args):
             client = Parse(msg.value(), rssPayload.client, ignore_unknown_fields=True)
             if client is not None:
                 # logs out hte client
-                if client.blobs[0] is not None:
+                if len(client.blobs) < 1:
+                    
+                    continue
 
+                else:
+                    
                     logger.debug("Client blob_url: {}".format(client.blobs[0].blob_url))
 
                     # downloads the blob prior to inferencing
@@ -174,15 +178,15 @@ def main(args):
                         rssPayload.client.name="Slim Shady"
                         # rssPayload.client=client
 
-                        producer.produce(
-                            topic="rss_topic_test",
-                            partition=0,
-                            key="payload",
-                            value=protobuf_serializer(
-                                rssPayload, SerializationContext(topic, MessageField.VALUE)
-                            ),
-                            on_delivery=delivery_report,
-                        )
+                        # producer.produce(
+                        #     topic="rss_topic_test",
+                        #     partition=0,
+                        #     key="payload",
+                        #     value=protobuf_serializer(
+                        #         rssPayload, SerializationContext(topic, MessageField.VALUE)
+                        #     ),
+                        #     on_delivery=delivery_report,
+                        # )
 
                     else:
                         logger.debug("No damage detected.")
@@ -190,7 +194,7 @@ def main(args):
         except KeyboardInterrupt:
             break
 
-    producer.flush()
+    # producer.flush()
     consumer.close()
     neo4j.close()
     logger.info("Flushing records and releasing resources...")
@@ -202,7 +206,7 @@ if __name__ == "__main__":
         dest="bootstrap_servers",
         required=False,
         help="Bootstrap broker(s) (host[:port])",
-        default="pkc-v12gj.northamerica-northeast2.gcp.confluent.cloud:9092",
+        default="pkc-4rn2p.canadacentral.azure.confluent.cloud:9092",
     )
     parser.add_argument(
         "-s",
