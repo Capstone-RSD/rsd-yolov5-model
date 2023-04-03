@@ -72,15 +72,15 @@ def main(args):
     #     RSSPayload, schema_registry_client, {"use.deprecated.format": False}
     # )
 
-    # producer_conf = {
-    #     "bootstrap.servers": args.bootstrap_servers,
-    #     "security.protocol": "SASL_SSL",
-    #     "sasl.mechanisms": "PLAIN",
-    #     "sasl.username": args.cluster_key,
-    #     "sasl.password": args.cluster_secret,
-    # }
+    producer_conf = {
+        "bootstrap.servers": args.bootstrap_servers,
+        "security.protocol": "SASL_SSL",
+        "sasl.mechanisms": "PLAIN",
+        "sasl.username": args.cluster_key,
+        "sasl.password": args.cluster_secret,
+    }
 
-    # producer = Producer(producer_conf)
+    producer = Producer(producer_conf)
 
     consumer_conf = {
         "bootstrap.servers": args.bootstrap_servers,
@@ -115,7 +115,7 @@ def main(args):
     while True:
         try:
             # Serve on_delivery callbacks from previous calls to produce()
-            # producer.poll(0.0)
+            producer.poll(0.0)
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
             if msg is None:
