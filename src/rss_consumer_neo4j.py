@@ -54,13 +54,74 @@ class JsonToNeo4j:
           if node["latitude"] is not None and node["longitude"] is not None:
             lat = float(node["latitude"])
             lon = float(node["longitude"])
-            popup = folium.Popup(str(node), max_width=600, max_height=600)
+
+            iframe_damagePayload = ""
+            for item in node["damagePayload"]:
+              iframe_damagePayload += "<h5 style=\"font-size: 20px;\"><h5 style=\"font-weight: bold;\">Class:</h5>"+str(item["damage_class"])+",</h5>"
+              iframe_damagePayload += "<h5 style=\"font-size: 20px;\"><h5 style=\"font-weight: bold;\">Width:</h5>"+str(item["damage_width"])+",</h5>"
+              iframe_damagePayload += "<h5 style=\"font-size: 20px;\"><h5 style=\"font-weight: bold;\">Length:</h5>"+str(item["damage_length"])+",</h5><br><hr>"
+
+            iframe = folium.Html(
+                f"""
+                <html>
+                  <div class="accordion" id="accordionExample" style="width: 400px">
+                  
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Coordinates
+                        </button>
+                      </h2>
+                      
+                      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                        <div class="accordion-body">
+                          <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> {node["latitude"]}</h5><br>
+                          <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> {node["longitude"]}</h5>
+                        </div>
+                      </div>  
+                    </div>
+                    
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Deterioration Image
+                        </button>
+                      </h2>
+                      
+                      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                        <div class="accordion-body">
+                          <a href="{node["blob_url"]}"><img src="{node["blob_url"]}" alt="Image" width="350" height="300"></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Damage
+                        </button>
+                      </h2>
+                      
+                      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                        <div class="accordion-body">
+                          {iframe_damagePayload}
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </html>
+                """, 
+              script=True)
+
+            popup = folium.Popup(iframe, str(node), max_width=500)
             marker = folium.Marker(location=[lat, lon], popup=popup)
             marker.add_to(cluster)
             logger.info("Adding location marker")
         except (ValueError, TypeError):
           logging.exception("Value/type error occured during map creation")
           break
+        
       map.save("neo_map.html")
       upload_map_to_firebase()
       logger.info("Generating and uploading map")
