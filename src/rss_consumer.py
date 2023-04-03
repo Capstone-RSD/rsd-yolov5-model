@@ -142,7 +142,7 @@ def main(args):
                     else:
                         print("Video blob type expected")
 
-                    damagePayload = model_inference(
+                    damagePayload, boundedbox_image_url = model_inference(
                         imagePath=download_blob(image_blob.blob_url),
                         model=model,
                         imgsz=imgsz,
@@ -162,6 +162,7 @@ def main(args):
                             "longitude": client.damageLocation.lat_lng.longitude,
                             "speed": client.speed,
                             "blob_url": client.blobs[0].blob_url,
+                            "boundedbox_image_url": boundedbox_image_url,
                             # "datetime_created": client.blobs[0].datetime_created,
                             # "type": client.blobs[0].blob_type,
                             "damagePayload": damagePayload,

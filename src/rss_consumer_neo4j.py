@@ -109,6 +109,20 @@ class JsonToNeo4j:
                       </div>
                     </div>
 
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                          BoundedBox Image
+                        </button>
+                      </h2>
+                      
+                      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">
+                        <div class="accordion-body">
+                          <a href="{node["boundedbox_image_url"]}"><img src="{node["boundedbox_image_url"]}" alt="Image" width="350" height="300"></a>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </html>
                 """, 
