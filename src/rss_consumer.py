@@ -125,7 +125,7 @@ def main(args):
 
             producer.produce(
                             topic="rss_pres_topic",
-                            # partition=0,
+                            partition=0,
                             # key="payload",
                             # value=protobuf_serializer(
                             #     rssPayload, SerializationContext(topic, MessageField.VALUE)
@@ -167,7 +167,7 @@ def main(args):
 
                     producer.produce(
                             topic="rss_pres_topic",
-                            # partition=0,
+                            partition=0,
                             # key="payload",
                             # value=protobuf_serializer(
                             #     rssPayload, SerializationContext(topic, MessageField.VALUE)

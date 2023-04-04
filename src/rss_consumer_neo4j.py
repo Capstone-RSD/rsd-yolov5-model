@@ -65,32 +65,32 @@ class JsonToNeo4j:
                 f"""
                 <html>
                   <div class="accordion" id="accordionExample" style="width: 400px">
-                  
+
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                           Coordinates
                         </button>
                       </h2>
-                      
+
                       <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
                         <div class="accordion-body">
                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> {node["latitude"]}</h5><br>
                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> {node["longitude"]}</h5>
                         </div>
-                      </div>  
+                      </div>
                     </div>
-                    
+
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                           Deterioration Image
                         </button>
                       </h2>
-                      
+
                       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
                         <div class="accordion-body">
-                          <a href="{node["blob_url"]}"><img src="{node["blob_url"]}" alt="Image" width="350" height="300"></a>
+                          <a href="{node["blob_url"]}" target="_blank"><img src="{node["blob_url"]}" alt="Image" width="350" height="300"></a>
                         </div>
                       </div>
                     </div>
@@ -101,7 +101,7 @@ class JsonToNeo4j:
                           Damage
                         </button>
                       </h2>
-                      
+
                       <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
                         <div class="accordion-body">
                           {iframe_damagePayload}
@@ -115,17 +115,17 @@ class JsonToNeo4j:
                           BoundedBox Image
                         </button>
                       </h2>
-                      
+
                       <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">
                         <div class="accordion-body">
-                          <a href="{node["boundedbox_image_url"]}"><img src="{node["boundedbox_image_url"]}" alt="Image" width="350" height="300"></a>
+                          <a href="{node["boundedbox_image_url"]}" target="_blank"><img src="{node["boundedbox_image_url"]}" alt="Image" width="350" height="300"></a>
                         </div>
                       </div>
                     </div>
 
                   </div>
                 </html>
-                """, 
+                """,
               script=True)
 
             popup = folium.Popup(iframe, str(node), max_width=500)
@@ -135,7 +135,7 @@ class JsonToNeo4j:
         except (ValueError, TypeError):
           logging.exception("Value/type error occured during map creation")
           break
-        
+
       map.save("neo_map.html")
       upload_map_to_firebase()
       logger.info("Generating and uploading map")
