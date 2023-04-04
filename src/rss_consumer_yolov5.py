@@ -55,6 +55,7 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
     seen += 1
     det=pred[0]
     damages_payload = []
+    boundedbox_image_url = ""
     if len(det):
         # Rescale boxes from img_size to im0 size
         pred2=scale_boxes(im.shape[2:], det[:, :4], img0.shape).round()
