@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Linting and Unittest 
+name: Linting and Unittest
 
 on:
   push:
@@ -10,14 +10,14 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.10"]
     steps:
       - name: Run tests
-        env: 
+        env:
           PYTHONPATH: $PYTHONPATH:./src
         run: python -m unittest discover -s tests -p 'test_client.py'
       - uses: actions/checkout@v2
@@ -33,7 +33,6 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           cd src/
-          pylint rss_consumertest.py
           pylint rss_consumer.py
   test:
     runs-on: ubuntu-latest

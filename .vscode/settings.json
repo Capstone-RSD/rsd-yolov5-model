@@ -11,5 +11,7 @@
         "-p",
         "test_*.py"
     ],
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

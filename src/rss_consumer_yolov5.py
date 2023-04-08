@@ -6,6 +6,7 @@ from yolov5.utils.torch_utils import time_sync
 import numpy as np
 from yolov5.utils.augmentations import letterbox
 from generated.rss_schema_pb2 import DamagePayload
+from rss_consumer_firebase import upload_boundedbox_image_to_firebase
 
 logger = logging.getLogger(__name__)
 
@@ -54,23 +55,27 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
     seen += 1
     det=pred[0]
     damages_payload = []
+    boundedbox_image_url = ""
     if len(det):
         # Rescale boxes from img_size to im0 size
         pred2=scale_boxes(im.shape[2:], det[:, :4], img0.shape).round()
         confidence=np.array(det[:,-2].cpu())
         box=np.array(pred2.cpu())
         classification=np.array(det[:,-1].cpu())
-        # logging.info(det.shape)
-        # logging.info('box: '+str(box))
-        # logging.info('class: '+str(classification))
-        # logging.info('confidence: '+str(confidence))
+        logging.debug(det.shape)
+        logging.debug('box: '+str(box))
+        logging.debug('class: '+str(classification))
+        logging.debug('confidence: '+str(confidence))
 
         #Calculate Lenth, Width, and get Class name
-        # image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         class_name = ['alligator cracking', 'edge cracking', 'longitudinal cracking', 'patching', 'pothole', 'rutting', 'transverse cracking']
         count = 0
         # payload = [] # TODO: fix this
         for x in classification:
+            x1=int(box[count, 0])
+            x2=int(box[count, 2])
+            y1=int(box[count, 1])
+            y2=int(box[count, 3])
             payload={
                         "damage_class": class_name[int(x)],
                         "damage_width": int(abs(box[count, 0] - box[count, 2])),
@@ -85,8 +90,20 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
             damages_payload.append(payload)
             count=count+1
             #Draw boxes on image
-            # cv2.rectangle(image, (box[count, 0], box[count, 1]), (box[count, 2], box[count, 3]), (255,0,0), 2)
+            img0 = cv2.rectangle(img0, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+            # For the text background
+            # Finds space required by the text so that we can put a background with that amount of width.
+            (w, h), _ = cv2.getTextSize(payload["damage_class"], cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
+
+            # Prints the text.
+            img0 = cv2.rectangle(img0, (x1, y1 - 20), (x1 + w, y1), (0, 0, 255), -1)
+            img0 = cv2.putText(img0, class_name[int(x)], (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+            cv2.imwrite('output.jpg',img0)
+
+        boundedbox_image_url = upload_boundedbox_image_to_firebase()
+        logger.info("Uploading bounded box image")
         logger.info("Inference successful")
         logger.debug('payload: ', damages_payload)
 
-    return damages_payload
+    return damages_payload, boundedbox_image_url
