@@ -33,8 +33,8 @@ from yolov5.utils.torch_utils import select_device
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t%(message)s",
+    level=logging.INFO,
+    format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t\t%(message)s",
 )
 load_dotenv(find_dotenv())
 
@@ -58,19 +58,11 @@ def delivery_report(err, msg):
 
 
 def main(args):
+    """
+    Consumes and performs a model inference before publishing its results to a Kafka topic
+    """
 
     topic = args.topic
-
-    # schema_registry_conf = {
-    #     "url": args.schema_registry,
-    #     "basic.auth.user.info":os.getenv('SR_API_KEY')+":"+os.getenv('SR_API_SECRET'),
-    # }
-
-    # schema_registry_client = SchemaRegistryClient(schema_registry_conf)
-
-    # protobuf_serializer = ProtobufSerializer(
-    #     RSSPayload, schema_registry_client, {"use.deprecated.format": False}
-    # )
 
     producer_conf = {
         "bootstrap.servers": args.bootstrap_servers,
@@ -111,70 +103,53 @@ def main(args):
     consumer = Consumer(consumer_conf)
     consumer.subscribe([topic])
 
-    neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
+    # neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
+    logger.info("Waiting for events...")
     while True:
         try:
-            # Serve on_delivery callbacks from previous calls to produce()
             producer.poll(0.0)
             # SIGINT can't be handled when polling, limit timeout to 1 second.
             msg = consumer.poll(1.0)
             if msg is None:
                 continue
-            logger.info("Waiting for events...")
             logger.debug("Consumed message: {}".format(msg.value()))
 
-            producer.produce(
-                            topic="rss_pres_topic",
-                            partition=0,
-                            # key="payload",
-                            # value=protobuf_serializer(
-                            #     rssPayload, SerializationContext(topic, MessageField.VALUE)
-                            # ),
-                            value="Stage: Data processing - Event consumed on RSS Service",
-                            on_delivery=delivery_report,
-                        )
+            rss_publisher(producer,msg="Data processing - Event consumed on RSS Service")
 
             rssPayload = RSSPayload()
             client = Parse(msg.value(), rssPayload.client, ignore_unknown_fields=True)
+
             if client is not None:
-                # logs out hte client
                 if len(client.blobs) < 1:
-
                     continue
-
                 else:
-
-                    logger.debug("Client blob_url: {}".format(client.blobs[0].blob_url))
-
                     # downloads the blob prior to inferencing
                     image_blob = client.blobs[0]
 
+                    damagePayload=[]
+                    boundedbox_image_url=""
+
                     if image_blob.image == "image":
-                        img = download_blob(image_blob.blob_url)
-                    else:
-                        print("Video blob type expected")
+                        try:
+                            # img = download_blob(image_blob.blob_url)
+                            logger.info("Blob Url: {}".format(image_blob.blob_url))
+                            damagePayload,boundedbox_image_url = model_inference(
+                                imagePath=download_blob(image_blob.blob_url),
+                                model=model,
+                                imgsz=imgsz,
+                                stride=stride,
+                                pt=pt,
+                                device=device,
+                                conf_thres=conf_thres,
+                                iou_thres=iou_thres,
+                            )
+                            logger.info("Boundedbox Blob Url: {}".format(boundedbox_image_url))
 
-                    damagePayload, boundedbox_image_url = model_inference(
-                        imagePath=download_blob(image_blob.blob_url),
-                        model=model,
-                        imgsz=imgsz,
-                        stride=stride,
-                        pt=pt,
-                        device=device,
-                        conf_thres=conf_thres,
-                        iou_thres=iou_thres,
-                    )
+                        except ValueError:
+                            logger.error("Image blob type expected, received Video blob instead")
 
-                    producer.produce(
-                            topic="rss_pres_topic",
-                            partition=0,
-                            # key="payload",
-                            # value=protobuf_serializer(
-                            #     rssPayload, SerializationContext(topic, MessageField.VALUE)
-                            # ),
-                            value="Stage: Data processing - Event processed on RSS Service",
-                            on_delivery=delivery_report,
-                        )
+
+                    rss_publisher(producer,msg="Data processing - Event processed on RSS Service")
 
                     if len(damagePayload) > 0:
                         js_obj = {
@@ -193,25 +168,13 @@ def main(args):
 
                         logger.debug(js_obj)
 
-                        neo4j.create_nodes(json_data=js_obj)
+                        # neo4j.create_nodes(json_data=js_obj)
 
                         logger.info(
                             "Producing records to topic {}. ^C to exit.".format("rss_topic_test")
                         )
 
-                        rssPayload.client.name="Slim Shady"
-                        # rssPayload.client=client
-
-                        producer.produce(
-                            topic="rss_pres_topic",
-                            partition=0,
-                            # key="payload",
-                            # value=protobuf_serializer(
-                            #     rssPayload, SerializationContext(topic, MessageField.VALUE)
-                            # ),
-                            value="Stage: Data processing - Payload stored on Neo4J Database and available on dashboard ",
-                            on_delivery=delivery_report,
-                        )
+                        rss_publisher(producer,msg="Data processing - Payload stored on Neo4J Database and available on dashboard")
 
                     else:
                         logger.debug("No damage detected.")
@@ -219,10 +182,23 @@ def main(args):
         except KeyboardInterrupt:
             break
 
-    # producer.flush()
+    # Releasing resources and stopping application quietly
+    producer.flush()
     consumer.close()
-    neo4j.close()
+    # neo4j.close()
     logger.info("Flushing records and releasing resources...")
+
+def rss_publisher(producer,msg:str):
+    """
+    Handles publishing the status events to Kafka
+    """
+    producer.produce(
+                            topic="rss_pres_topic",
+                            partition=0,
+                            key="status",
+                            value="Stage: {}".format(msg),
+                            on_delivery=delivery_report,
+                        )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RSS Consumer ML Service")
