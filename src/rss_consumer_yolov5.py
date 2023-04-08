@@ -62,13 +62,12 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
         confidence=np.array(det[:,-2].cpu())
         box=np.array(pred2.cpu())
         classification=np.array(det[:,-1].cpu())
-        # logging.info(det.shape)
-        # logging.info('box: '+str(box))
-        # logging.info('class: '+str(classification))
-        # logging.info('confidence: '+str(confidence))
+        logging.debug(det.shape)
+        logging.debug('box: '+str(box))
+        logging.debug('class: '+str(classification))
+        logging.debug('confidence: '+str(confidence))
 
         #Calculate Lenth, Width, and get Class name
-        # image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         class_name = ['alligator cracking', 'edge cracking', 'longitudinal cracking', 'patching', 'pothole', 'rutting', 'transverse cracking']
         count = 0
         # payload = [] # TODO: fix this
@@ -92,16 +91,16 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
             count=count+1
             #Draw boxes on image
             img0 = cv2.rectangle(img0, (x1, y1), (x2, y2), (0, 0, 255), 2)
- 
+
             # For the text background
             # Finds space required by the text so that we can put a background with that amount of width.
             (w, h), _ = cv2.getTextSize(payload["damage_class"], cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
 
-            # Prints the text.    
+            # Prints the text.
             img0 = cv2.rectangle(img0, (x1, y1 - 20), (x1 + w, y1), (0, 0, 255), -1)
             img0 = cv2.putText(img0, class_name[int(x)], (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
             cv2.imwrite('output.jpg',img0)
-            
+
         boundedbox_image_url = upload_boundedbox_image_to_firebase()
         logger.info("Uploading bounded box image")
         logger.info("Inference successful")
