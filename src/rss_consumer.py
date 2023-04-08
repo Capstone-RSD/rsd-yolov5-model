@@ -1,41 +1,34 @@
+"""
+This module contains tests for the rss_consumer module.
+"""
 import argparse
 import logging
-from dotenv import load_dotenv, find_dotenv
 import os
-import datetime
-import json
+from dotenv import load_dotenv, find_dotenv
 from confluent_kafka import Consumer, Producer
-from generated.rss_schema_pb2 import Client, RSSPayload
-from confluent_kafka.serialization import (
-    StringSerializer,
-    SerializationContext,
-    MessageField,
-)
-from confluent_kafka.schema_registry import SchemaRegistryClient
-from confluent_kafka.schema_registry.protobuf import ProtobufSerializer
+from google.protobuf.json_format import Parse
+import torch
 
-from google.protobuf.json_format import MessageToJson, Parse
+from yolov5.models.common import DetectMultiBackend
+from yolov5.utils.general import check_img_size
+from yolov5.utils.torch_utils import select_device
+from generated.rss_schema_pb2 import RSSPayload
+
 from rss_consumer_neo4j import JsonToNeo4j
 
 from rss_consumer_firebase import download_blob
 from rss_consumer_yolov5 import model_inference
 
-import sys
-from pathlib import Path
 
-import torch
-import torch.backends.cudnn as cudnn
 
-from yolov5.models.common import DetectMultiBackend
-from yolov5.utils.general import check_img_size
-from yolov5.utils.torch_utils import select_device
-
+# Create logger and set the logging level to INFO
 logger = logging.getLogger(__name__)
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - (%(filename)s:%(funcName)s) %(levelname)s %(name)s:\t\t%(message)s",
 )
+
+# Load environment variables
 load_dotenv(find_dotenv())
 
 
@@ -56,7 +49,7 @@ def delivery_report(err, msg):
         )
     )
 
-
+# pylint: disable=too-many-locals
 def main(args):
     """
     Consumes and performs a model inference before publishing its results to a Kafka topic
@@ -64,16 +57,7 @@ def main(args):
 
     topic = args.topic
 
-    producer_conf = {
-        "bootstrap.servers": args.bootstrap_servers,
-        "security.protocol": "SASL_SSL",
-        "sasl.mechanisms": "PLAIN",
-        "sasl.username": args.cluster_key,
-        "sasl.password": args.cluster_secret,
-    }
-
-    producer = Producer(producer_conf)
-
+    # Set up Kafka consumer configuration
     consumer_conf = {
         "bootstrap.servers": args.bootstrap_servers,
         "group.id": args.group,
@@ -86,6 +70,21 @@ def main(args):
         "session.timeout.ms": 45000,
     }
 
+    # Set up Kafka producer configuration
+    producer_conf = {
+        "bootstrap.servers": args.bootstrap_servers,
+        "security.protocol": "SASL_SSL",
+        "sasl.mechanisms": "PLAIN",
+        "sasl.username": args.cluster_key,
+        "sasl.password": args.cluster_secret,
+    }
+
+    producer = Producer(producer_conf)
+    consumer = Consumer(consumer_conf)
+    consumer.subscribe([topic])
+
+    # Set up YOLOv5 configuration
+    # pylint: disable=no-member
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     weights = os.path.abspath("best.pt")
     data = os.path.abspath("data.yaml")
@@ -94,21 +93,20 @@ def main(args):
     imgsz = [416, 416]
 
     torch.no_grad()
+
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
     stride, names, pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
-    consumer = Consumer(consumer_conf)
-    consumer.subscribe([topic])
-
-    # neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
+    neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
     logger.info("Waiting for events...")
     while True:
         try:
             producer.poll(0.0)
             # SIGINT can't be handled when polling, limit timeout to 1 second.
+            # Polling for incoming messages
             msg = consumer.poll(1.0)
             if msg is None:
                 continue
@@ -116,6 +114,7 @@ def main(args):
 
             rss_publisher(producer,msg="Data processing - Event consumed on RSS Service")
 
+            # Deserialize incoming message
             rssPayload = RSSPayload()
             client = Parse(msg.value(), rssPayload.client, ignore_unknown_fields=True)
 
@@ -128,7 +127,6 @@ def main(args):
 
                     damagePayload=[]
                     boundedbox_image_url=""
-
                     if image_blob.image == "image":
                         try:
                             # img = download_blob(image_blob.blob_url)
@@ -168,7 +166,7 @@ def main(args):
 
                         logger.debug(js_obj)
 
-                        # neo4j.create_nodes(json_data=js_obj)
+                        neo4j.create_nodes(json_data=js_obj)
 
                         logger.info(
                             "Producing records to topic {}. ^C to exit.".format("rss_topic_test")
@@ -183,9 +181,10 @@ def main(args):
             break
 
     # Releasing resources and stopping application quietly
-    producer.flush()
     consumer.close()
-    # neo4j.close()
+    # Wait for all messages in the Producer queue to be delivered
+    producer.flush()
+    neo4j.close()
     logger.info("Flushing records and releasing resources...")
 
 def rss_publisher(producer,msg:str):
