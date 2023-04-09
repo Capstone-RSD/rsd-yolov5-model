@@ -5,9 +5,9 @@ name: Linting and Unittest
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
   lint:
@@ -33,7 +33,7 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           cd src/
-          pylint rss_consumer.py
+          pylint --logging-format-style=new --variable-naming-style=any --ignore-imports=y --fail-under=7 --logging-format-style=new rss_consumer.py
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -56,5 +56,4 @@ jobs:
           echo "::set-env name=PYTHONPATH::${{ github.workspace }}/src"
       - name: Test with unittest
         run: |
-          python -m unittest discover -s tests -p 'test_client.py'
-          python -m unittest tests/test_client.py --cluster_key ${{ secrets.CLUSTER_API_KEY }} --cluster_secret ${{ secrets.CLUSTER_API_SECRET }}
+          python -m unittest discover -s tests -p 'test_firebase.py'

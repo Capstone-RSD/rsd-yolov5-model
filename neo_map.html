@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
+    
         <script>
             L_NO_TOUCH = false;
             L_DISABLE_3D = false;
         </script>
-
+    
     <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
     <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
@@ -21,11 +21,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-
+    
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_93bc7ec330d055d2201351dcb1d3fdcb {
+                #map_6b158a229f28d789ebb0ed0f99e7189c {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -34,22 +34,22 @@
                 }
                 .leaflet-container { font-size: 1rem; }
             </style>
-
+        
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
 </head>
 <body>
-
-
-            <div class="folium-map" id="map_93bc7ec330d055d2201351dcb1d3fdcb" ></div>
-
+    
+    
+            <div class="folium-map" id="map_6b158a229f28d789ebb0ed0f99e7189c" ></div>
+        
 </body>
 <script>
-
-
-            var map_93bc7ec330d055d2201351dcb1d3fdcb = L.map(
-                "map_93bc7ec330d055d2201351dcb1d3fdcb",
+    
+    
+            var map_6b158a229f28d789ebb0ed0f99e7189c = L.map(
+                "map_6b158a229f28d789ebb0ed0f99e7189c",
                 {
                     center: [43.945082, -78.89674],
                     crs: L.CRS.EPSG3857,
@@ -59,125 +59,314 @@
                 }
             );
 
+            
 
-
-
-
-            var tile_layer_e8a9d59ef37a9c83c5b5fb9cc3e24abd = L.tileLayer(
+        
+    
+            var tile_layer_4d7757715b6d235515fbfd04c8738697 = L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_93bc7ec330d055d2201351dcb1d3fdcb);
-
-
-            var marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39 = L.markerClusterGroup(
+            ).addTo(map_6b158a229f28d789ebb0ed0f99e7189c);
+        
+    
+            var marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c = L.markerClusterGroup(
                 {"disableClusteringAtZoom": 16, "showCoverageOnHover": false, "spiderfyOnMaxZoom": false, "zoomToBoundsOnClick": true}
             );
-            map_93bc7ec330d055d2201351dcb1d3fdcb.addLayer(marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39);
-
-
-            var marker_cda67585cc07462b8813de35fafca3da = L.marker(
-                [43.6332, -79.4186],
+            map_6b158a229f28d789ebb0ed0f99e7189c.addLayer(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+            var marker_35cab310506d22470804b9a5d62a5ee3 = L.marker(
+                [43.783, -79.1874],
                 {}
-            ).addTo(marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39);
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_a7ac860a9943c9a2f57f2bd8deb645e2 = L.popup({"maxWidth": 500});
 
+        
+            
+                var html_80636bf0a47e698cb0190471976de10a = $(`<div id="html_80636bf0a47e698cb0190471976de10a" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.783</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.1874</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>783,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1058,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011441" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011441" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_a7ac860a9943c9a2f57f2bd8deb645e2.setContent(html_80636bf0a47e698cb0190471976de10a);
+            
+        
 
-        var popup_0bec3a3d1a6b79196555fa08bea4f786 = L.popup({"maxWidth": 500});
-
-
-
-                var html_927c43a79178dff7f49b5f717d0705fd = $(`<div id="html_927c43a79178dff7f49b5f717d0705fd" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                                        <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.6332</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.4186</h5>                         </div>                       </div>                       </div>                                          <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>360,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>194,</h5><br><hr>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
-                popup_0bec3a3d1a6b79196555fa08bea4f786.setContent(html_927c43a79178dff7f49b5f717d0705fd);
-
-
-
-        marker_cda67585cc07462b8813de35fafca3da.bindPopup(popup_0bec3a3d1a6b79196555fa08bea4f786)
+        marker_35cab310506d22470804b9a5d62a5ee3.bindPopup(popup_a7ac860a9943c9a2f57f2bd8deb645e2)
         ;
 
-
-
-
-            var marker_08cf26afa4e804635dfbfd366d32f203 = L.marker(
-                [43.6332, -79.4186],
+        
+    
+    
+            var marker_f7261e41a6860aa8cd059ad60570fc66 = L.marker(
+                [43.783, -79.1874],
                 {}
-            ).addTo(marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39);
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_46f3226e1caac3cfc88ad90e29bd2622 = L.popup({"maxWidth": 500});
 
+        
+            
+                var html_d0ac8c7b11880e3051b16a55047c3da9 = $(`<div id="html_d0ac8c7b11880e3051b16a55047c3da9" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.783</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.1874</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>783,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1058,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011474" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011474" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_46f3226e1caac3cfc88ad90e29bd2622.setContent(html_d0ac8c7b11880e3051b16a55047c3da9);
+            
+        
 
-        var popup_5afe8cead17d3458a820068f89eef171 = L.popup({"maxWidth": 500});
-
-
-
-                var html_7418263357cb34696c051af1225afc5d = $(`<div id="html_7418263357cb34696c051af1225afc5d" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                                        <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.6332</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.4186</h5>                         </div>                       </div>                       </div>                                          <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>360,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>194,</h5><br><hr>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
-                popup_5afe8cead17d3458a820068f89eef171.setContent(html_7418263357cb34696c051af1225afc5d);
-
-
-
-        marker_08cf26afa4e804635dfbfd366d32f203.bindPopup(popup_5afe8cead17d3458a820068f89eef171)
+        marker_f7261e41a6860aa8cd059ad60570fc66.bindPopup(popup_46f3226e1caac3cfc88ad90e29bd2622)
         ;
 
-
-
-
-            var marker_dc2d5ea0a20c8df2d9c4544692a49095 = L.marker(
-                [43.6332, -79.4186],
+        
+    
+    
+            var marker_b650aee745c867b07fe56bc24c7f763f = L.marker(
+                [43.783, -79.1874],
                 {}
-            ).addTo(marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39);
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_37795970d834ef202cf42c2d8399a236 = L.popup({"maxWidth": 500});
 
+        
+            
+                var html_01c8c6c0526627867190e5b58fd05c9d = $(`<div id="html_01c8c6c0526627867190e5b58fd05c9d" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.783</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.1874</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>783,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1058,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011475" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011475" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_37795970d834ef202cf42c2d8399a236.setContent(html_01c8c6c0526627867190e5b58fd05c9d);
+            
+        
 
-        var popup_63f724fa8b633fd324313e017f39156f = L.popup({"maxWidth": 500});
-
-
-
-                var html_c6859fcd31ad18a479fdf07943a71be6 = $(`<div id="html_c6859fcd31ad18a479fdf07943a71be6" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                                        <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.6332</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.4186</h5>                         </div>                       </div>                       </div>                                          <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>360,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>194,</h5><br><hr>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
-                popup_63f724fa8b633fd324313e017f39156f.setContent(html_c6859fcd31ad18a479fdf07943a71be6);
-
-
-
-        marker_dc2d5ea0a20c8df2d9c4544692a49095.bindPopup(popup_63f724fa8b633fd324313e017f39156f)
+        marker_b650aee745c867b07fe56bc24c7f763f.bindPopup(popup_37795970d834ef202cf42c2d8399a236)
         ;
 
-
-
-
-            var marker_70aae3e75bec76fefcea5715e6e9e99d = L.marker(
-                [43.6332, -79.4186],
+        
+    
+    
+            var marker_7fa752f22edcab48330fbea64beecf90 = L.marker(
+                [43.783, -79.1874],
                 {}
-            ).addTo(marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39);
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_133a52ec9e0073573ef1ba21e65bd9fe = L.popup({"maxWidth": 500});
 
+        
+            
+                var html_d34d465ba0ffb0809de457adb78d344f = $(`<div id="html_d34d465ba0ffb0809de457adb78d344f" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.783</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.1874</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>783,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1058,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011647" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011647" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_133a52ec9e0073573ef1ba21e65bd9fe.setContent(html_d34d465ba0ffb0809de457adb78d344f);
+            
+        
 
-        var popup_8963be415731e81370e83421a1822c0e = L.popup({"maxWidth": 500});
-
-
-
-                var html_74fd2be378b35538adbfbc8b6738a396 = $(`<div id="html_74fd2be378b35538adbfbc8b6738a396" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                                        <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.6332</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.4186</h5>                         </div>                       </div>                       </div>                                          <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>360,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>194,</h5><br><hr>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
-                popup_8963be415731e81370e83421a1822c0e.setContent(html_74fd2be378b35538adbfbc8b6738a396);
-
-
-
-        marker_70aae3e75bec76fefcea5715e6e9e99d.bindPopup(popup_8963be415731e81370e83421a1822c0e)
+        marker_7fa752f22edcab48330fbea64beecf90.bindPopup(popup_133a52ec9e0073573ef1ba21e65bd9fe)
         ;
 
-
-
-
-            var marker_53fef4898f96d5da0644e773c39c55be = L.marker(
-                [43.6332, -79.4186],
+        
+    
+    
+            var marker_845f3a88634bd0d97ef9b47558471993 = L.marker(
+                [43.783, -79.1874],
                 {}
-            ).addTo(marker_cluster_d3d7148d6f47b9dbff1cfe0feee78f39);
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_97069702a760a0312b671e07a6bf79a2 = L.popup({"maxWidth": 500});
 
+        
+            
+                var html_880ddee0ce99580fa493bc00c85e7f8a = $(`<div id="html_880ddee0ce99580fa493bc00c85e7f8a" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.783</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.1874</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>783,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1058,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011649" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1681011649" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_97069702a760a0312b671e07a6bf79a2.setContent(html_880ddee0ce99580fa493bc00c85e7f8a);
+            
+        
 
-        var popup_e183a82191892c7548bf281b117ae6db = L.popup({"maxWidth": 500});
-
-
-
-                var html_8cf209b1d5aa26c615251ff857843ecd = $(`<div id="html_8cf209b1d5aa26c615251ff857843ecd" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                                        <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.6332</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.4186</h5>                         </div>                       </div>                       </div>                                          <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2F1674194362506000.jpg?alt=media&token=5ea16c4f-5edc-4f31-b3d2-4ad5774f3ec2" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>360,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>194,</h5><br><hr>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
-                popup_e183a82191892c7548bf281b117ae6db.setContent(html_8cf209b1d5aa26c615251ff857843ecd);
-
-
-
-        marker_53fef4898f96d5da0644e773c39c55be.bindPopup(popup_e183a82191892c7548bf281b117ae6db)
+        marker_845f3a88634bd0d97ef9b47558471993.bindPopup(popup_97069702a760a0312b671e07a6bf79a2)
         ;
 
+        
+    
+    
+            var marker_c15c0a436480082c0c8e14f9113f655a = L.marker(
+                [43.783, -79.1874],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_dd7135982bfd484b8223356290418b72 = L.popup({"maxWidth": 500});
 
+        
+            
+                var html_82eaa4dd16e25136a4e31dde0a15f4b3 = $(`<div id="html_82eaa4dd16e25136a4e31dde0a15f4b3" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.783</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -79.1874</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2Fuploads%2FVideoCapture_20230403-180647.jpg?alt=media&token=9f6de00a-0ff7-41fd-a7d3-2bd50cae18cb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>783,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1058,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680579695" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680579695" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_dd7135982bfd484b8223356290418b72.setContent(html_82eaa4dd16e25136a4e31dde0a15f4b3);
+            
+        
 
+        marker_c15c0a436480082c0c8e14f9113f655a.bindPopup(popup_dd7135982bfd484b8223356290418b72)
+        ;
+
+        
+    
+    
+            var marker_37a46f50f24bd36d3dfff85c5a0dcd66 = L.marker(
+                [43.9569703, -78.9014294],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_8bbfbf53bff939f247c671ee3046b7ff = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_cf88467aca2a5d3c24aba07b13cffdb1 = $(`<div id="html_cf88467aca2a5d3c24aba07b13cffdb1" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569703</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014294</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580867650753.jpg?alt=media&token=d2bcecc1-1e92-4a25-b5a4-3a38580a35dc" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580867650753.jpg?alt=media&token=d2bcecc1-1e92-4a25-b5a4-3a38580a35dc" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1786,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>2526,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581037" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581037" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_8bbfbf53bff939f247c671ee3046b7ff.setContent(html_cf88467aca2a5d3c24aba07b13cffdb1);
+            
+        
+
+        marker_37a46f50f24bd36d3dfff85c5a0dcd66.bindPopup(popup_8bbfbf53bff939f247c671ee3046b7ff)
+        ;
+
+        
+    
+    
+            var marker_1c8c1334a94dd4e2b6b3b53c6b63d03c = L.marker(
+                [43.9569705, -78.9014392],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_996d007fbcd5d307bf219377dfb0a71f = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_dcca38fa407506546ca2aa246cadd43a = $(`<div id="html_dcca38fa407506546ca2aa246cadd43a" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569705</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014392</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580984972817.jpg?alt=media&token=3acbd622-ad36-43a1-8df1-3e8ba1e5fc47" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580984972817.jpg?alt=media&token=3acbd622-ad36-43a1-8df1-3e8ba1e5fc47" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1634,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>2315,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581040" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581040" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_996d007fbcd5d307bf219377dfb0a71f.setContent(html_dcca38fa407506546ca2aa246cadd43a);
+            
+        
+
+        marker_1c8c1334a94dd4e2b6b3b53c6b63d03c.bindPopup(popup_996d007fbcd5d307bf219377dfb0a71f)
+        ;
+
+        
+    
+    
+            var marker_3f1ac031aced028851e4a04374ed9acb = L.marker(
+                [43.9569705, -78.9014392],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_664a5281d70f767db05660b5afc9757a = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_b33e4ee4581642c9aac7c9ea7423eb54 = $(`<div id="html_b33e4ee4581642c9aac7c9ea7423eb54" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569705</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014392</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580984972817.jpg?alt=media&token=3acbd622-ad36-43a1-8df1-3e8ba1e5fc47" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580984972817.jpg?alt=media&token=3acbd622-ad36-43a1-8df1-3e8ba1e5fc47" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1634,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>2315,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581041" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581041" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_664a5281d70f767db05660b5afc9757a.setContent(html_b33e4ee4581642c9aac7c9ea7423eb54);
+            
+        
+
+        marker_3f1ac031aced028851e4a04374ed9acb.bindPopup(popup_664a5281d70f767db05660b5afc9757a)
+        ;
+
+        
+    
+    
+            var marker_af79acba2f95b37d85ee24989a9a0fb2 = L.marker(
+                [43.9569703, -78.9014294],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_123ec7f4d93e51f8f182ffd76ad52197 = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_cc8fc91d53c26873f723026267bda5dd = $(`<div id="html_cc8fc91d53c26873f723026267bda5dd" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569703</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014294</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580867650753.jpg?alt=media&token=d2bcecc1-1e92-4a25-b5a4-3a38580a35dc" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680580867650753.jpg?alt=media&token=d2bcecc1-1e92-4a25-b5a4-3a38580a35dc" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1786,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>2526,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581043" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581043" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_123ec7f4d93e51f8f182ffd76ad52197.setContent(html_cc8fc91d53c26873f723026267bda5dd);
+            
+        
+
+        marker_af79acba2f95b37d85ee24989a9a0fb2.bindPopup(popup_123ec7f4d93e51f8f182ffd76ad52197)
+        ;
+
+        
+    
+    
+            var marker_a0add3141217c73b5c1081729f27fc22 = L.marker(
+                [43.9569894, -78.9014487],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_aa6e2446852390f2bd4d0cd6faf38a48 = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_88997da9af022632e08eea72757ba93b = $(`<div id="html_88997da9af022632e08eea72757ba93b" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569894</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014487</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581064099435.jpg?alt=media&token=69cabfd0-5068-4a15-979f-40686187eccb" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581064099435.jpg?alt=media&token=69cabfd0-5068-4a15-979f-40686187eccb" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1644,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>2528,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581080" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581080" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_aa6e2446852390f2bd4d0cd6faf38a48.setContent(html_88997da9af022632e08eea72757ba93b);
+            
+        
+
+        marker_a0add3141217c73b5c1081729f27fc22.bindPopup(popup_aa6e2446852390f2bd4d0cd6faf38a48)
+        ;
+
+        
+    
+    
+            var marker_acd8e337410a957da97906469704f93b = L.marker(
+                [43.9569714, -78.9014377],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_85eaf1229b0a7e3f443b5473ddd7bb01 = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_3abac522feae8441054ead217316660b = $(`<div id="html_3abac522feae8441054ead217316660b" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569714</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014377</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581318961019.jpg?alt=media&token=2f58747f-cda6-496b-9a24-033a4f8a7507" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581318961019.jpg?alt=media&token=2f58747f-cda6-496b-9a24-033a4f8a7507" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1787,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>2434,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581340" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581340" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_85eaf1229b0a7e3f443b5473ddd7bb01.setContent(html_3abac522feae8441054ead217316660b);
+            
+        
+
+        marker_acd8e337410a957da97906469704f93b.bindPopup(popup_85eaf1229b0a7e3f443b5473ddd7bb01)
+        ;
+
+        
+    
+    
+            var marker_c340080dac91e75b05d987c8b26b3294 = L.marker(
+                [43.9569765, -78.9013849],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_0480d7f0cfcc702de60edf61e8dbaf75 = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_812d4754cdff7cf009d5753d6b494748 = $(`<div id="html_812d4754cdff7cf009d5753d6b494748" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569765</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9013849</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581477946047.jpg?alt=media&token=3617c6f3-495f-44f5-8989-5dfb8f870f06" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581477946047.jpg?alt=media&token=3617c6f3-495f-44f5-8989-5dfb8f870f06" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1795,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>1451,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581497" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581497" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_0480d7f0cfcc702de60edf61e8dbaf75.setContent(html_812d4754cdff7cf009d5753d6b494748);
+            
+        
+
+        marker_c340080dac91e75b05d987c8b26b3294.bindPopup(popup_0480d7f0cfcc702de60edf61e8dbaf75)
+        ;
+
+        
+    
+    
+            var marker_9d8b70abadefb2da487abee24472bbc6 = L.marker(
+                [43.9569837, -78.9014371],
+                {}
+            ).addTo(marker_cluster_eb63d1674bb2e805a1580ceb9885ab2c);
+        
+    
+        var popup_093abcc94352b17e0d9ef311d3700ec6 = L.popup({"maxWidth": 500});
+
+        
+            
+                var html_ced90e2a571985e914c2b2a41bc76ee0 = $(`<div id="html_ced90e2a571985e914c2b2a41bc76ee0" style="width: 100.0%; height: 100.0%;">                 <html>                   <div class="accordion" id="accordionExample" style="width: 400px">                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingOne">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">                           Coordinates                         </button>                       </h2>                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Latitude:</h5> 43.9569837</h5><br>                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Longitude:</h5> -78.9014371</h5>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingTwo">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">                           Deterioration Image                         </button>                       </h2>                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">                         <div class="accordion-body">                           <a href="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581895840071.jpg?alt=media&token=78201c98-a34e-447d-aefe-09177a1138b3" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/rss-client-21d3b.appspot.com/o/users%2FPnsFgl9SDqgjZJyOz37ZzJDMxRD3%2Fuploads%2F1680581895840071.jpg?alt=media&token=78201c98-a34e-447d-aefe-09177a1138b3" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingThree">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">                           Damage                         </button>                       </h2>                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">                         <div class="accordion-body">                           <h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Class:</h5>pothole,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Width:</h5>1125,</h5><h5 style="font-size: 20px;"><h5 style="font-weight: bold;">Length:</h5>934,</h5><br><hr>                         </div>                       </div>                     </div>                      <div class="accordion-item">                       <h2 class="accordion-header" id="headingFour">                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">                           BoundedBox Image                         </button>                       </h2>                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour">                         <div class="accordion-body">                           <a href="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581910" target="_blank"><img src="https://storage.googleapis.com/rss-client-21d3b.appspot.com/output/1680581910" alt="Image" width="350" height="300"></a>                         </div>                       </div>                     </div>                    </div>                 </html>                 </div>`)[0];
+                popup_093abcc94352b17e0d9ef311d3700ec6.setContent(html_ced90e2a571985e914c2b2a41bc76ee0);
+            
+        
+
+        marker_9d8b70abadefb2da487abee24472bbc6.bindPopup(popup_093abcc94352b17e0d9ef311d3700ec6)
+        ;
+
+        
+    
 </script>
 </html>

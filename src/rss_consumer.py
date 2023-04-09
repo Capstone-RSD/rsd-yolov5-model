@@ -97,7 +97,7 @@ def main(args):
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=False, data=data, fp16=False)
-    stride, names, pt = model.stride, model.names, model.pt
+    stride, pt = model.stride, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
     neo4j = JsonToNeo4j(args.db_uri, args.db_username, args.db_password)
@@ -118,65 +118,64 @@ def main(args):
             rssPayload = RSSPayload()
             client = Parse(msg.value(), rssPayload.client, ignore_unknown_fields=True)
 
-            if client is not None:
-                if len(client.blobs) < 1:
-                    continue
-                else:
-                    # downloads the blob prior to inferencing
-                    image_blob = client.blobs[0]
+            if client is not None and len(client.blobs) > 0:
 
-                    damagePayload=[]
-                    boundedbox_image_url=""
-                    if image_blob.image == "image":
-                        try:
-                            # img = download_blob(image_blob.blob_url)
-                            logger.info("Blob Url: {}".format(image_blob.blob_url))
-                            damagePayload,boundedbox_image_url = model_inference(
-                                imagePath=download_blob(image_blob.blob_url),
-                                model=model,
-                                imgsz=imgsz,
-                                stride=stride,
-                                pt=pt,
-                                device=device,
-                                conf_thres=conf_thres,
-                                iou_thres=iou_thres,
-                            )
-                            logger.info("Boundedbox Blob Url: {}".format(boundedbox_image_url))
+                # downloads the blob prior to inferencing
+                image_blob = client.blobs[0]
 
-                        except ValueError:
-                            logger.error("Image blob type expected, received Video blob instead")
-
-
-                    rss_publisher(producer,msg="Data processing - Event processed on RSS Service")
-
-                    if len(damagePayload) > 0:
-                        js_obj = {
-                            "name": client.name,
-                            "id": client.id,
-                            "email": client.email,
-                            "latitude": client.damageLocation.lat_lng.latitude,
-                            "longitude": client.damageLocation.lat_lng.longitude,
-                            "speed": client.speed,
-                            "blob_url": client.blobs[0].blob_url,
-                            "boundedbox_image_url": boundedbox_image_url,
-                            # "datetime_created": client.blobs[0].datetime_created,
-                            # "type": client.blobs[0].blob_type,
-                            "damagePayload": damagePayload,
-                        }
-
-                        logger.debug(js_obj)
-
-                        neo4j.create_nodes(json_data=js_obj)
-
-                        logger.info(
-                            "Producing records to topic {}. ^C to exit.".format("rss_topic_test")
+                damagePayload=[]
+                boundedbox_image_url=""
+                if image_blob.image == "image":
+                    try:
+                        # img = download_blob(image_blob.blob_url)
+                        logger.debug("Blob Url: {}".format(image_blob.blob_url))
+                        damagePayload,boundedbox_image_url = model_inference(
+                            imagePath=download_blob(image_blob.blob_url),
+                            model=model,
+                            imgsz=imgsz,
+                            stride=stride,
+                            pt=pt,
+                            device=device,
+                            conf_thres=conf_thres,
+                            iou_thres=iou_thres,
                         )
+                        logger.debug("Boundedbox Blob Url: {}".format(boundedbox_image_url))
 
-                        rss_publisher(producer,msg="Data processing - Payload stored on Neo4J Database and available on dashboard")
+                    except ValueError:
+                        logger.error("Image blob type expected, received Video blob instead")
 
-                    else:
-                        logger.debug("No damage detected.")
 
+                rss_publisher(producer,msg="Data processing - Event processed on RSS Service")
+
+                if len(damagePayload) > 0:
+                    js_obj = {
+                        "name": client.name,
+                        "id": client.id,
+                        "email": client.email,
+                        "latitude": client.damageLocation.lat_lng.latitude,
+                        "longitude": client.damageLocation.lat_lng.longitude,
+                        "speed": client.speed,
+                        "blob_url": client.blobs[0].blob_url,
+                        "boundedbox_image_url": boundedbox_image_url,
+                        # "datetime_created": client.blobs[0].datetime_created,
+                        # "type": client.blobs[0].blob_type,
+                        "damagePayload": damagePayload,
+                    }
+
+                    logger.debug(js_obj)
+
+                    neo4j.create_nodes(json_data=js_obj)
+
+                    logger.info(
+                        "Producing records to topic {}. ^C to exit.".format("rss_topic_test")
+                    )
+
+                    rss_publisher(producer,msg="Data processing - Payload stored on Neo4J Database and available on dashboard")
+
+                else:
+                    logger.debug("No damage detected.")
+            else:
+                continue
         except KeyboardInterrupt:
             break
 
