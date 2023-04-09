@@ -128,6 +128,10 @@ def main(args):
                 if image_blob.image == "image":
                     try:
                         # img = download_blob(image_blob.blob_url)
+                            # path = "/"
+                        dir_list = os.listdir()
+
+                        logger.info("Files and directories in: ", dir_list)
                         logger.debug("Blob Url: {}".format(image_blob.blob_url))
                         damagePayload,boundedbox_image_url = model_inference(
                             imagePath=download_blob(image_blob.blob_url),
