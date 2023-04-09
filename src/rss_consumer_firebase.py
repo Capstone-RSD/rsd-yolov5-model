@@ -42,7 +42,9 @@ def upload_boundedbox_image_to_firebase():
     """
     Uploads the generated HTML markup to a firebase bucket
     """
+    dir_list = os.listdir()
 
+    print("Files and directories in: ", dir_list)
     # Put your local file path
     fileName = os.path.abspath("output.jpg")
     epoch_time = int(time.time())
