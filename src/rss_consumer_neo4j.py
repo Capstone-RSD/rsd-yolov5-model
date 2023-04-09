@@ -136,6 +136,6 @@ class JsonToNeo4j:
           logging.exception("Value/type error occured during map creation")
           break
 
-      map.save("neo_map.html")
+      map.save("./neo_map.html",close_file=True)
       upload_map_to_firebase()
       logger.info("Generating and uploading map")

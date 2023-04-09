@@ -102,7 +102,7 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
             img0 = cv2.putText(img0, class_name[int(x)], (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
             cv2.imwrite('./output.jpg',img0)
 
-            logger.info("Files and directories in: ", os.listdir())
+            # logger.info("Files and directories in: ", os.listdir())
 
         boundedbox_image_url = upload_boundedbox_image_to_firebase()
         logger.info("Uploading bounded box image")
