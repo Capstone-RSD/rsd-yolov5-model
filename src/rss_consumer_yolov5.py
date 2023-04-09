@@ -100,10 +100,9 @@ def model_inference(imagePath, model, imgsz, stride, pt, device, conf_thres, iou
             # Prints the text.
             img0 = cv2.rectangle(img0, (x1, y1 - 20), (x1 + w, y1), (0, 0, 255), -1)
             img0 = cv2.putText(img0, class_name[int(x)], (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
-            cv2.imwrite('output.jpg',img0)
-            dir_list = os.listdir()
+            cv2.imwrite('./output.jpg',img0)
 
-            logger.info("Files and directories in: ", dir_list)
+            logger.info("Files and directories in: ", os.listdir())
 
         boundedbox_image_url = upload_boundedbox_image_to_firebase()
         logger.info("Uploading bounded box image")
