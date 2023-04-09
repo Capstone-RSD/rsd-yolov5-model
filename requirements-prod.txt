@@ -5,8 +5,8 @@ protobuf
 firebase
 firebase-admin
 google-cloud-storage
-# opencv-python
-opencv-python-headless
+opencv-python
+# opencv-python-headless
 yolov5
 python-dotenv
 google-api-python-client

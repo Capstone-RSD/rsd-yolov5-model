@@ -1,5 +1,7 @@
 # FROM pytorch/pytorch:latest
-FROM bitnami/pytorch:1.13.0-debian-11-r16
+# FROM bitnami/pytorch:1.13.0-debian-11-r16
+# FROM graphcore/pytorch:3.2.0-ubuntu-20.04-20230314
+FROM pytorch/torchserve:latest-cpu
 
 WORKDIR /app
 
