@@ -86,7 +86,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-          - mountPath: "/opt/firebase"
+          - mountPath: "/opt/firebase" # mount firebase storage using: kubectl create secret generic firebase-secret --from-file=<private-key.json>
             name: secret-volume # matches secret name
             readOnly: true # no editing!
       volumes:
