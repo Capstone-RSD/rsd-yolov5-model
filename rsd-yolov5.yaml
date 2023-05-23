@@ -36,37 +36,37 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: CLUSTER_API_KEY
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         - name: CLUSTER_API_SECRET
           valueFrom:
             configMapKeyRef:
               key: CLUSTER_API_SECRET
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         - name: SR_API_KEY
           valueFrom:
             configMapKeyRef:
               key: SR_API_KEY
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         - name: SR_API_SECRET
           valueFrom:
             configMapKeyRef:
               key: SR_API_SECRET
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         - name: NEO4J_DB_URI
           valueFrom:
             configMapKeyRef:
               key: NEO4J_DB_URI
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         - name: NEO4J_DB_USERNAME
           valueFrom:
             configMapKeyRef:
               key: NEO4J_DB_USERNAME
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         - name: NEO4J_DB_PASSWORD
           valueFrom:
             configMapKeyRef:
               key: NEO4J_DB_PASSWORD
-              name: rsd-yolov5-deploy-config-3umg
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
         image: gcr.io/capstone-rsd/github.com/capstone-rsd/rsd-yolov5-model@sha256:c19cf29e43626cac930bdd2f3d3ba4d1899007dceac7fd17d6a6e773b248679c
         imagePullPolicy: IfNotPresent
         name: rsd-yolov5-model-sha256-1
