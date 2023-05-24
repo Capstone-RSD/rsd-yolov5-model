@@ -1,5 +1,7 @@
 # Capstone-RSD/rsd-yolov5-model
 
+[![Linting and Unittest](https://github.com/Capstone-RSD/rsd-yolov5-model/actions/workflows/test_client.yml/badge.svg)](https://github.com/Capstone-RSD/rsd-yolov5-model/actions/workflows/test_client.yml)
+
 Capstone-RSD/rsd-yolov5-model is a Python machine learning application that utilizes the YOLOv5 model for road surface deterioration detection, Apache Kafka for event streaming, and Neo4j for establishing relationships between the location of the damages and the damage captured. The application is designed to be deployed on Kubernetes and can be developed using Docker containers.
 
 ## Contents
