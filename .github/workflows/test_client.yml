@@ -52,9 +52,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint unittest2 parameterized
           if [ -f requirements-prod.txt ]; then pip install -r requirements-prod.txt; fi
-      - name: Set up environment variables
-        run: |
-          echo "::set-env name=PYTHONPATH::${{ github.workspace }}/src"
+#       - name: Set up environment variables
+#         run: |
+#           echo "::set-env name=PYTHONPATH::${{ github.workspace }}/src"
       - name: Test with unittest
         run: |
           python -m unittest discover -s tests -p 'test_firebase.py'
