@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"limits":{"cpu":"1","ephemeral-storage":"1Gi","memory":"8Gi"},"requests":{"cpu":"1","ephemeral-storage":"1Gi","memory":"8Gi"},"name":"rsd-yolov5-model-sha256-1"}]},"output":{"containers":[{"limits":{"cpu":"1250m","ephemeral-storage":"1Gi","memory":"8Gi"},"requests":{"cpu":"1250m","ephemeral-storage":"1Gi","memory":"8Gi"},"name":"rsd-yolov5-model-sha256-1"}]},"modified":true}'
+    deployment.kubernetes.io/revision: "2"
+  creationTimestamp: "2023-03-21T04:58:00Z"
+  generation: 2
+  labels:
+    app: rsd-yolov5-deploy
+  name: rsd-yolov5-deploy
+  namespace: default
+  resourceVersion: "19911794"
+  uid: ee42ec89-8d02-42bc-965a-baebde21ed25
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: rsd-yolov5-deploy
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rsd-yolov5-deploy
+    spec:
+      containers:
+      - env:
+        - name: CLUSTER_API_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: CLUSTER_API_KEY
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        - name: CLUSTER_API_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: CLUSTER_API_SECRET
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        - name: SR_API_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: SR_API_KEY
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        - name: SR_API_SECRET
+          valueFrom:
+            configMapKeyRef:
+              key: SR_API_SECRET
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        - name: NEO4J_DB_URI
+          valueFrom:
+            configMapKeyRef:
+              key: NEO4J_DB_URI
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        - name: NEO4J_DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: NEO4J_DB_USERNAME
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        - name: NEO4J_DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: NEO4J_DB_PASSWORD
+              name: rsd-yolov5-deploy-config-3umg # Update to your own env variables
+        image: gcr.io/capstone-rsd/github.com/capstone-rsd/rsd-yolov5-model@sha256:c19cf29e43626cac930bdd2f3d3ba4d1899007dceac7fd17d6a6e773b248679c
+        imagePullPolicy: IfNotPresent
+        name: rsd-yolov5-model-sha256-1
+        resources:
+          limits:
+            cpu: 1250m
+            ephemeral-storage: 1Gi
+            memory: 8Gi
+          requests:
+            cpu: 1250m
+            ephemeral-storage: 1Gi
+            memory: 8Gi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+          - mountPath: "/opt/firebase" # mount firebase storage using: kubectl create secret generic firebase-secret --from-file=<private-key.json>
+            name: secret-volume # matches secret name
+            readOnly: true # no editing!
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: firebase-secret
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+status:
+  conditions:
+  - lastTransitionTime: "2023-03-21T05:01:27Z"
+    lastUpdateTime: "2023-03-21T05:01:27Z"
+    message: Deployment does not have minimum availability.
+    reason: MinimumReplicasUnavailable
+    status: "False"
+    type: Available
+  - lastTransitionTime: "2023-03-21T04:58:00Z"
+    lastUpdateTime: "2023-03-21T23:11:04Z"
+    message: ReplicaSet "rsd-yolov5-deploy-7688b6c945" is progressing.
+    reason: ReplicaSetUpdated
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  replicas: 4
+  unavailableReplicas: 4
+  updatedReplicas: 2
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "rsd-yolov5-deploy-service"
+  namespace: "default"
+  labels:
+    app: "rsd-yolov5-deploy"
+spec:
+  ports:
+  - name: "80-to-80-tcp"
+    protocol: "TCP"
+    port: 80
+  - name: "9092-to-9092-tcp"
+    protocol: "TCP"
+    port: 9092
+  - name: "443-to-443-tcp"
+    protocol: "TCP"
+    port: 443
+  selector:
+    app: "rsd-yolov5-deploy"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
